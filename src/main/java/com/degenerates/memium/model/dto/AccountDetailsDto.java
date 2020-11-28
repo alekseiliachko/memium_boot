@@ -24,6 +24,12 @@ public class AccountDetailsDto {
     public AccountDetails toAccountDetails() {
         AccountDetails accountDetails = new AccountDetails();
 
+        accountDetails.setAccountId(getAccountId());
+        accountDetails.setName(getName());
+        accountDetails.setBio(getBio());
+        accountDetails.setGender(getGender());
+        accountDetails.setDob(getDob());
+
         return accountDetails;
     }
 }

@@ -18,6 +18,12 @@ public class AccountFacade {
     @Autowired
     AccountDetailsService accountDetailsService;
 
+    AccountDto getByToken(String token) {
+
+
+        return new AccountDto();
+    }
+
 
     AccountDto saveAccount(AccountDto accountDto) {
         Account account = accountDto.toAccount();
@@ -43,25 +49,20 @@ public class AccountFacade {
 
     // details
     AccountDetailsDto saveAccountDetalils(AccountDetailsDto accountDetailsDto) {
-        Account account = accountService.getById(accountDetailsDto.getAccountId());
-        AccountDetails accountDetailsToSave = accountDetailsService.getByDetailsId(account.getAccountDetailsId());
-        AccountDetails accountDetails = accountDetailsDto.toAccountDetails();
+        AccountDetails accountDetailsToSave = accountDetailsService.getByAccountId(accountDetailsDto.getAccountId());
 
-        accountDetailsToSave.setName(accountDetails.getName());
-        accountDetailsToSave.setBio(accountDetails.getBio());
-        accountDetailsToSave.setDetailsId(accountDetails.getDetailsId());
-        accountDetailsToSave.setDob(accountDetails.getDob());
-        accountDetailsToSave.setGender(accountDetails.getGender());
+        accountDetailsToSave.setName(accountDetailsDto.getName());
+        accountDetailsToSave.setBio(accountDetailsDto.getBio());
+        accountDetailsToSave.setAccountId(accountDetailsDto.getAccountId());
+        accountDetailsToSave.setDob(accountDetailsDto.getDob());
+        accountDetailsToSave.setGender(accountDetailsDto.getGender());
 
         AccountDetailsDto accountDetailsDtoResponse = accountDetailsService.save(accountDetailsToSave).toAccountDetailsDto();
         return accountDetailsDtoResponse;
     };
 
     AccountDetailsDto findAccountDetailsByAccountId(UUID accountId) {
-        Account account = accountService.getById(accountId);
-        AccountDetails accountDetails = accountDetailsService.getByDetailsId(account.getAccountDetailsId());
+        AccountDetails accountDetails = accountDetailsService.getByAccountId(accountId);
         return accountDetails.toAccountDetailsDto();
     }
-
-
 }

@@ -21,7 +21,11 @@ public class AccountDto {
     public Account toAccount() {
         Account account = new Account();
 
-
+        account.setAccountId(getId());
+        account.setUsername(getUsername());
+        account.setEmail(getEmail());
+        account.setCreated(getCreated());
+        account.setAccountDetailsId(getAccountDetailsId());
 
         return account;
     };

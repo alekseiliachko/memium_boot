@@ -15,7 +15,7 @@ public class AccountDetails {
 
     @Id
     @NonNull
-    UUID detailsId;
+    UUID accountId;
 
     @NonNull
     String name;
@@ -29,6 +29,12 @@ public class AccountDetails {
 
     public AccountDetailsDto toAccountDetailsDto() {
         AccountDetailsDto accountDetailsDto = new AccountDetailsDto();
+
+        accountDetailsDto.setAccountId(getAccountId());
+        accountDetailsDto.setName(accountDetailsDto.getName());
+        accountDetailsDto.setBio(accountDetailsDto.getBio());
+        accountDetailsDto.setGender(accountDetailsDto.getBio());
+        accountDetailsDto.setDob(accountDetailsDto.getDob());
 
         return accountDetailsDto;
     }

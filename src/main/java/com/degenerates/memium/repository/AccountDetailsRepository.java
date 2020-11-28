@@ -8,5 +8,5 @@ import java.util.UUID;
 @Repository
 public interface AccountDetailsRepository extends MongoRepository<AccountDetails, UUID> {
 
-    AccountDetails findByDetailsId(UUID id);
+    AccountDetails findByAccountId(UUID id);
 }

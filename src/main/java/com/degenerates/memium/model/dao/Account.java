@@ -15,7 +15,7 @@ public class Account {
 
     @Id
     @NonNull
-    UUID id;
+    UUID accountId;
 
     @NonNull
     String username;
@@ -29,11 +29,13 @@ public class Account {
     @NonNull
     Date created;
 
-    @NonNull
-    UUID accountDetailsId;
-
     public AccountDto toAccountDto() {
         AccountDto accountDto = new AccountDto();
+
+        accountDto.setId(getAccountId());
+        accountDto.setUsername(getUsername());
+        accountDto.setEmail(getEmail());
+        accountDto.setCreated(getCreated());
 
         return accountDto;
     }

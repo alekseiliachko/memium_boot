@@ -17,7 +17,7 @@ public class AccountService {
 
     public Account save(Account account) {
         Account accountSaved = accountRepository.save(account);
-        log.info("Saved accound: " + account.getId());
+        log.info("Saved accound: " + account.getAccountId());
         return accountSaved;
     }
 

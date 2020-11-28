@@ -18,12 +18,12 @@ public class AccountDetailsService {
 
     public AccountDetails save(AccountDetails accountDetails) {
         AccountDetails accountDetailsSaved = accountDetailsRepository.save(accountDetails);
-        log.info("Saved account details: " + accountDetailsSaved.getDetailsId());
+        log.info("Saved account details: " + accountDetailsSaved.getAccountId());
         return accountDetails;
     }
 
-    public AccountDetails getByDetailsId(UUID id) {
-        AccountDetails accountDetails = accountDetailsRepository.findByDetailsId(id);
+    public AccountDetails getByAccountId(UUID id) {
+        AccountDetails accountDetails = accountDetailsRepository.findByAccountId(id);
         if (accountDetails != null)
             log.info("Found account details with id: " + id);
         else
