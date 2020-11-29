@@ -13,6 +13,7 @@ import com.degenerates.memium.repository.AccountRepository;
 import com.degenerates.memium.repository.RoleRepository;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.security.services.SecurityUserDetails;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
