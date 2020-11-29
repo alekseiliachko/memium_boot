@@ -1,4 +1,4 @@
 package com.degenerates.memium.facade;
 
-public class LikesFacade {
+public class FeedFacade {
 }

@@ -1,4 +1,4 @@
 package com.degenerates.memium.facade;
 
-public class BlackListFacade {
+public class SearchFacade {
 }

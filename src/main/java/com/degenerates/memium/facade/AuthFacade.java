@@ -88,6 +88,7 @@ public class AuthFacade {
 
     public ResponseEntity<?> getUsernameByToken(MeRequest tokenRequest) {
         String username = jwtUtils.getUserNameFromJwtToken(tokenRequest.getToken());
-        return ResponseEntity.ok(username);
+        Account account = accountService.getByUsername(username);
+        return ResponseEntity.ok(account.getAccountId());
     };
 }

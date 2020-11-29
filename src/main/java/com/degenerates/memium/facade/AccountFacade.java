@@ -2,67 +2,144 @@ package com.degenerates.memium.facade;
 
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.AccountDetails;
+import com.degenerates.memium.model.dao.Image;
 import com.degenerates.memium.model.dto.AccountDetailsDto;
 import com.degenerates.memium.model.dto.AccountDto;
+import com.degenerates.memium.model.dto.ImageDto;
 import com.degenerates.memium.service.AccountDetailsService;
 import com.degenerates.memium.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class AccountFacade {
 
-    @Autowired
-    AccountService accountService;
+    public ResponseEntity<?> getAvatar(String token) {
 
-    @Autowired
-    AccountDetailsService accountDetailsService;
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
 
-    AccountDto getByToken(String token) {
+    public ResponseEntity<?> setAvatar(String token, ImageDto imageDto) {
 
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
 
-        return new AccountDto();
+    public ResponseEntity<?> deleteCurrentAvatar(String token) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
     }
 
 
-    AccountDto saveAccount(AccountDto accountDto) {
-        Account account = accountDto.toAccount();
 
-        return accountService.save(account).toAccountDto();
-    };
+    public ResponseEntity<?> getAccount(String token) {
 
-    AccountDto findAccountById(UUID id) {
-        Account account = accountService.getById(id);
-
-        return account == null? null: account.toAccountDto();
+        String str = "";
+        return ResponseEntity.ok(str);
     }
 
-    AccountDto findAccountByUsername(String username) {
-        Account account = accountService.getByUsername(username);
+    public ResponseEntity<?> getAccountById(String accountId) {
 
-        return account == null? null: account.toAccountDto();
+        String str = "";
+        return ResponseEntity.ok(str);
     }
 
-    void deleteAccount(UUID id) {
-        this.accountService.deleteById(id);
+    public ResponseEntity<?> saveAccount(AccountDto accountDto) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
     }
 
-    // details
-    AccountDetailsDto saveAccountDetalils(AccountDetailsDto accountDetailsDto) {
-        AccountDetails accountDetailsToSave = accountDetailsService.getByAccountId(accountDetailsDto.getAccountId());
+    public ResponseEntity<?> getAccountDetailsById(String accountId) {
 
-        accountDetailsToSave.setName(accountDetailsDto.getName());
-        accountDetailsToSave.setBio(accountDetailsDto.getBio());
-        accountDetailsToSave.setAccountId(accountDetailsDto.getAccountId());
-        accountDetailsToSave.setDob(accountDetailsDto.getDob());
-        accountDetailsToSave.setGender(accountDetailsDto.getGender());
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
 
-        AccountDetailsDto accountDetailsDtoResponse = accountDetailsService.save(accountDetailsToSave).toAccountDetailsDto();
-        return accountDetailsDtoResponse;
-    };
 
-    AccountDetailsDto findAccountDetailsByAccountId(UUID accountId) {
-        AccountDetails accountDetails = accountDetailsService.getByAccountId(accountId);
-        return accountDetails.toAccountDetailsDto();
+
+    public ResponseEntity<?> getAccountDetails(String token) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> updateAccountDetails(String token, AccountDetailsDto accountDetailsDto) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> updateEmail(String token, String email) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+
+
+
+    public ResponseEntity<?> getSubscriptions(String token) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> subscribe(String token, String accountId) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> unsubscribe(String token, String accountId) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+
+
+    public ResponseEntity<?> getLikes(String token) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> like(String token, String articleId) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> unlike(String token, String articleId) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+
+
+
+    public ResponseEntity<?> getBlackList(String token) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> addToBlackList(String token, String accountId) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
+    }
+
+    public ResponseEntity<?> removeFromBlackList(String token, String accountId) {
+
+        String str = "";
+        return ResponseEntity.ok(str);
     }
 }

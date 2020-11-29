@@ -1,9 +1,7 @@
 package com.degenerates.memium.model.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import com.degenerates.memium.model.dto.ArticleDto;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -11,6 +9,7 @@ import java.util.UUID;
 
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Article {
 
     @Id
@@ -28,4 +27,20 @@ public class Article {
 
     @NonNull
     Category category;
+
+    @NonNull
+    String data;
+
+    public ArticleDto toArticleDto() {
+        ArticleDto articleDto = new ArticleDto();
+
+        articleDto.setId(articleId);
+        articleDto.setTitle(title);
+        articleDto.setAuthorId(authorId);
+        articleDto.setCategory(category);
+        articleDto.setDate(date);
+        articleDto.setData(data);
+
+        return articleDto;
+    }
 }
