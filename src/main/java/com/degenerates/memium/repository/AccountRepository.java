@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface AccountRepository extends MongoRepository<Account, UUID> {
 
     Account findByUsername(String username);
+
+    Boolean existsByUsername(String username);
 }

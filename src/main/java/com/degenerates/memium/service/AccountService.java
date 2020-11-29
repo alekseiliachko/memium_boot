@@ -30,6 +30,10 @@ public class AccountService {
         return account;
     };
 
+    public Boolean checkIfExists(String username) {
+        return accountRepository.existsByUsername(username);
+    }
+
     public Account getByUsername(String username) {
         Account account = accountRepository.findByUsername(username);
         if (account != null)

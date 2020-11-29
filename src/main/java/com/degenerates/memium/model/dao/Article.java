@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.UUID;
 
 @Data
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class Article {
 

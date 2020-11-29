@@ -25,7 +25,6 @@ public class AccountDto {
         account.setUsername(getUsername());
         account.setEmail(getEmail());
         account.setCreated(getCreated());
-        account.setAccountDetailsId(getAccountDetailsId());
 
         return account;
     };
