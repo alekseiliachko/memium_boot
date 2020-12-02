@@ -100,5 +100,6 @@ public class ArticleFacade {
         commentService.deleteByAtricleId(articleId);
 
         return ResponseEntity.accepted().body("deleted");
+        
     }
 }
