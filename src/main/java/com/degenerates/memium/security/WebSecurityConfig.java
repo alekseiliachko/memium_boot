@@ -64,13 +64,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 										"/swagger-ui/**",
 										"/swagger-resources/**",
 										"/swagger-resources").permitAll()
-//				.antMatchers("/api/auth/**").permitAll()
-//				.antMatchers("/api/account/**").permitAll()
-//				.antMatchers("/api/article/**").permitAll()
-//				.antMatchers("/api/comment/**").permitAll()
-//				.antMatchers("/api/open/account/**").permitAll()
-//				.antMatchers("/api/open/article/**").permitAll()
-//				.antMatchers("/api/open/comment/**").permitAll()
+				.antMatchers("/api/auth/**").permitAll()
+				.antMatchers("/api/account/**").hasRole("ROLE_USER")
+				.antMatchers("/api/article/**").hasRole("ROLE_USER")
+				.antMatchers("/api/comment/**").hasRole("ROLE_USER")
+				.antMatchers("/api/feed/**").hasRole("ROLE_USER")
+				.antMatchers("/api/open/account/**").permitAll()
+				.antMatchers("/api/open/article/**").permitAll()
+				.antMatchers("/api/open/comment/**").permitAll()
+				.antMatchers("/api/open/like/**").permitAll()
+				.antMatchers("/api/open/sub/**").permitAll()
 
 
 				.anyRequest().authenticated();

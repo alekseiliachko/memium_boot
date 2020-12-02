@@ -15,7 +15,7 @@ public class SubOpenController {
         SubFacade subFacade;
 
         @GetMapping("/{accountId}")
-        public ResponseEntity<?> getLikeForArticle(@PathVariable UUID accountId) {
+        public ResponseEntity<?> getSubsForArticle(@PathVariable UUID accountId) {
             return subFacade.getSubOfAccount(accountId);
         }
     }
