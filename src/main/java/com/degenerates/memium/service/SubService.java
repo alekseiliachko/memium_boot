@@ -1,0 +1,31 @@
+package com.degenerates.memium.service;
+
+import com.degenerates.memium.model.relations.SubList;
+import com.degenerates.memium.repository.SubListRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class SubService {
+
+    @Autowired
+    SubListRepository repository;
+
+    public List<SubList> getAccountData(UUID accountId) {
+        return repository.findByAccountId(accountId);
+    };
+
+    public void byAccountSubToAccount(UUID accountId, UUID subId) {
+        SubList subList = new SubList(accountId, subId);
+        if (!repository.existsByAccountIdAndSubId(accountId, subId))
+            repository.save(subList);
+    }
+
+    public void byAccountUnsubAccount(UUID accountId, UUID subId) {
+        SubList subList = repository.findByAccountIdAndSubId(accountId, subId);
+        if (subList != null) repository.delete(subList);
+    }
+}

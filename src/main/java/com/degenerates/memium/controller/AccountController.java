@@ -3,10 +3,13 @@ package com.degenerates.memium.controller;
 import com.degenerates.memium.facade.AccountFacade;
 import com.degenerates.memium.model.dto.AccountDetailsDto;
 import com.degenerates.memium.model.dto.ImageDto;
+import com.degenerates.memium.model.dto.UpdatePasswordEmailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 import static com.degenerates.memium.util.Constants.TOKEN_VAR;
 
@@ -73,10 +76,10 @@ public class AccountController {
     }
 
     @PutMapping("/email")
-    public ResponseEntity<?> updateEmail(@RequestHeader HttpHeaders headers, String email) {
+    public ResponseEntity<?> updateAccount(@RequestHeader HttpHeaders headers, UpdatePasswordEmailDto updatePasswordEmailDto) {
         String token = headers.get(TOKEN_VAR).get(0);
 
-        return accountFacade.updateEmail(token, email);
+        return accountFacade.updateAccount(token, updatePasswordEmailDto);
     }
 
 
@@ -91,14 +94,14 @@ public class AccountController {
     }
 
     @PostMapping("/sub")
-    public ResponseEntity<?> subscribe(@RequestHeader HttpHeaders headers, String accountId) {
+    public ResponseEntity<?> subscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.subscribe(token, accountId);
     }
 
     @DeleteMapping("/sub")
-    public ResponseEntity<?> unSubscribe(@RequestHeader HttpHeaders headers, String accountId) {
+    public ResponseEntity<?> unSubscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.unsubscribe(token, accountId);
@@ -116,14 +119,14 @@ public class AccountController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<?> like(@RequestHeader HttpHeaders headers, String articleId) {
+    public ResponseEntity<?> like(@RequestHeader HttpHeaders headers, UUID articleId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.like(token, articleId);
     }
 
     @DeleteMapping("/like")
-    public ResponseEntity<?> unLike(@RequestHeader HttpHeaders headers, String articleId) {
+    public ResponseEntity<?> unLike(@RequestHeader HttpHeaders headers, UUID articleId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.unlike(token, articleId);
@@ -143,14 +146,14 @@ public class AccountController {
     }
 
     @PostMapping("/bl")
-    public ResponseEntity<?> addBL(@RequestHeader HttpHeaders headers, String accountId) {
+    public ResponseEntity<?> addBL(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.addToBlackList(token, accountId);
     }
 
     @DeleteMapping("/bl")
-    public ResponseEntity<?> removeBL(@RequestHeader HttpHeaders headers, String accountId) {
+    public ResponseEntity<?> removeBL(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.removeFromBlackList(token, accountId);

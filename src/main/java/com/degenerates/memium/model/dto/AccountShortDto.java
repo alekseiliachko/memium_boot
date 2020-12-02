@@ -7,5 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class AccountShortDto {
     String name;
+    String bio;
     byte[] imageData;
 }

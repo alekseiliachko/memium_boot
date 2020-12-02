@@ -6,6 +6,7 @@ import com.degenerates.memium.model.dto.ArticleDto;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.AccountService;
 import com.degenerates.memium.service.ArticleService;
+import com.degenerates.memium.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,9 @@ public class ArticleFacade {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    CommentService commentService;
 
     public ResponseEntity<?> getArticle(UUID articleId) {
         return ResponseEntity.ok(articleService.getById(articleId).toArticleDto());
@@ -93,6 +97,8 @@ public class ArticleFacade {
         }
 
         articleService.deleteById(articleId);
+        commentService.deleteByAtricleId(articleId);
+
         return ResponseEntity.accepted().body("deleted");
     }
 }
