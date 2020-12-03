@@ -32,4 +32,8 @@ public class LikeService {
         LikeList likeList = repository.findByAccountIdAndArticleId(accountId, likeId);
         if (likeList != null) repository.delete(likeList);
     }
+
+    public void unlikeAllByAticleId(UUID articleId) {
+        repository.deleteByArticleId(articleId);
+    }
 }

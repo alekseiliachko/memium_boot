@@ -1,6 +1,7 @@
 package com.degenerates.memium.facade;
 
 import com.degenerates.memium.model.dao.Account;
+import com.degenerates.memium.model.dao.AccountDetails;
 import com.degenerates.memium.model.dto.LogInForm;
 import com.degenerates.memium.model.dto.LogInSuccess;
 import com.degenerates.memium.model.dto.MeRequest;
@@ -71,19 +72,25 @@ public class AuthFacade {
 
         // Create new user's account
         Account account = new Account();
+        AccountDetails accountDetails = new AccountDetails();
 
         account.setAccountId(UUID.randomUUID());
         account.setUsername(signUpRequest.getUsername());
         account.setEmail(signUpRequest.getEmail());
         account.setCreated(new Date());
-
         account.setRoles(roleService.getDefaultRoleSet());
-
         account.setPassword(encoder.encode(signUpRequest.getPassword()));
 
-        accountService.save(account);
+        Account savedAccount = accountService.save(account);
 
-        return ResponseEntity.ok("User registered successfully!");
+        accountDetails.setGender(signUpRequest.getGender());
+        accountDetails.setDob(signUpRequest.getDob());
+        accountDetails.setName(signUpRequest.getName());
+        accountDetails.setAccountId(savedAccount.getAccountId());
+        accountDetails.setBio(signUpRequest.getBio());
+        accountDetailsService.save(accountDetails);
+
+        return ResponseEntity.ok("saved");
     }
 
     public ResponseEntity<?> getUsernameByToken(MeRequest tokenRequest) {

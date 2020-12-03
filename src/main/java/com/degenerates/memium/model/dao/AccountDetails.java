@@ -17,14 +17,12 @@ public class AccountDetails {
     @NonNull
     UUID accountId;
 
-    @NonNull
     String name;
 
     String bio;
 
     String gender;
 
-    @NonNull
     Date dob;
 
     public AccountDetailsDto toAccountDetailsDto() {

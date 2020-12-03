@@ -1,5 +1,6 @@
 package com.degenerates.memium.model.dao;
 
+import com.degenerates.memium.model.enums.Category;
 import com.degenerates.memium.model.dto.ArticleDto;
 import lombok.*;
 import org.springframework.data.annotation.Id;

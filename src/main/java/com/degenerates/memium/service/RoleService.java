@@ -1,7 +1,7 @@
 package com.degenerates.memium.service;
 
 import com.degenerates.memium.exceptions.EntityNotFoundException;
-import com.degenerates.memium.model.dao.ERole;
+import com.degenerates.memium.model.enums.ERole;
 import com.degenerates.memium.model.dao.Role;
 import com.degenerates.memium.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

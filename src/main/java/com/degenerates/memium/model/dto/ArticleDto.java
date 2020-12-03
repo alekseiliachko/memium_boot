@@ -1,9 +1,8 @@
 package com.degenerates.memium.model.dto;
 
 import com.degenerates.memium.model.dao.Article;
-import com.degenerates.memium.model.dao.Category;
+import com.degenerates.memium.model.enums.Category;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.util.Date;
 import java.util.UUID;

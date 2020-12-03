@@ -16,4 +16,6 @@ public interface LikeListRepository extends MongoRepository<LikeList, UUID> {
     LikeList findByAccountIdAndArticleId(UUID accountId, UUID articleId);
 
     Boolean existsByAccountIdAndArticleId(UUID accountId, UUID articleId);
+
+    void deleteByArticleId(UUID articleId);
 }
