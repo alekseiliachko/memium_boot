@@ -24,7 +24,7 @@ public class FeedFacade {
     @Autowired
     LikeService likeService;
 
-    public ResponseEntity<?> getFeedForUserToken(String token) {
+    public ResponseEntity<FeedDto> getFeedForUserToken(String token) {
         FeedDto feedDto = new FeedDto();
 
 

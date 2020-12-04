@@ -1,5 +1,6 @@
 package com.degenerates.memium.model.dao;
 
+import com.degenerates.memium.model.dto.ArticleShortDto;
 import com.degenerates.memium.model.enums.Category;
 import com.degenerates.memium.model.dto.ArticleDto;
 import lombok.*;
@@ -41,6 +42,18 @@ public class Article {
         articleDto.setCategory(category);
         articleDto.setDate(date);
         articleDto.setData(data);
+
+        return articleDto;
+    }
+
+    public ArticleShortDto toArticleShortDto() {
+        ArticleShortDto articleDto = new ArticleShortDto();
+
+        articleDto.setId(articleId);
+        articleDto.setTitle(title);
+        articleDto.setAuthorId(authorId);
+        articleDto.setCategory(category);
+        articleDto.setDate(date);
 
         return articleDto;
     }

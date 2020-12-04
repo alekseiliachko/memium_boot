@@ -4,6 +4,7 @@ import com.degenerates.memium.facade.CommentFacade;
 import com.degenerates.memium.model.dto.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class CommentController {
     CommentFacade commentFacade;
 
     @PostMapping
-    public ResponseEntity<?> comment(@RequestHeader HttpHeaders headers,  @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> comment(@RequestHeader HttpHeaders headers,  @RequestBody CommentDto commentDto) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return commentFacade.createComment(commentDto, token);
@@ -28,7 +29,7 @@ public class CommentController {
 
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<?> deleteComment(@RequestHeader HttpHeaders headers, @PathVariable UUID commentId) {
+    public HttpStatus deleteComment(@RequestHeader HttpHeaders headers, @PathVariable UUID commentId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return commentFacade.deleteComment(commentId, token);

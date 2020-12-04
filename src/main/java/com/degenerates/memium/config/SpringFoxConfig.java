@@ -25,11 +25,7 @@ public class SpringFoxConfig {
         return new ApiInfoBuilder()
                 .title(title)
                 .description(description)
-                .license("")
-                .licenseUrl("http://unlicense.org")
-                .termsOfServiceUrl("")
                 .version("1.0.0")
-                .contact(new Contact("lesha", "site.com", "mail@mail.mail"))
                 .build();
     }
 

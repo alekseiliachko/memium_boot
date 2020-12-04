@@ -12,6 +12,7 @@ import com.degenerates.memium.service.AccountDetailsService;
 import com.degenerates.memium.service.AccountService;
 import com.degenerates.memium.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +45,7 @@ public class AuthFacade {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public ResponseEntity<?> logUserIn(LogInForm logInRequest) {
+    public ResponseEntity<LogInSuccess> logUserIn(LogInForm logInRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(logInRequest.getUsername(), logInRequest.getPassword()));
@@ -61,12 +62,10 @@ public class AuthFacade {
         return ResponseEntity.ok(new LogInSuccess(jwt, userDetails.getUsername()));
     }
 
-    public ResponseEntity<?> signUserUp(SignupForm signUpRequest) {
+    public HttpStatus signUserUp(SignupForm signUpRequest) {
 
         if (accountService.checkIfExists(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Username is already taken!");
+            return HttpStatus.BAD_REQUEST;
         }
 
 
@@ -90,7 +89,7 @@ public class AuthFacade {
         accountDetails.setBio(signUpRequest.getBio());
         accountDetailsService.save(accountDetails);
 
-        return ResponseEntity.ok("saved");
+        return HttpStatus.CREATED;
     }
 
     public ResponseEntity<?> getUsernameByToken(MeRequest tokenRequest) {

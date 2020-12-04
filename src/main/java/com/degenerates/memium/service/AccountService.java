@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -29,6 +30,10 @@ public class AccountService {
             log.info("No account with id: " + id);
         return account;
     };
+
+    public List<Account> getByIds(List<UUID> ids) {
+        return accountRepository.findByAccountId(ids);
+    }
 
     public Boolean checkIfExists(String username) {
         return accountRepository.existsByUsername(username);

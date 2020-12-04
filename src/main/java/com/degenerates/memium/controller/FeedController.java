@@ -1,6 +1,7 @@
 package com.degenerates.memium.controller;
 
 import com.degenerates.memium.facade.FeedFacade;
+import com.degenerates.memium.model.dto.FeedDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class FeedController {
     FeedFacade feedFacade;
 
     @GetMapping
-    public ResponseEntity<?> getFeed(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<FeedDto> getFeed(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return feedFacade.getFeedForUserToken(token);

@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class FeedDto {
-    List<ArticleDto> articles;
+    List<ArticleShortDto> articles;
     List<AccountShortDto> accounts;
 }

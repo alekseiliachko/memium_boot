@@ -1,14 +1,17 @@
 package com.degenerates.memium.controller;
 
 import com.degenerates.memium.facade.AccountFacade;
-import com.degenerates.memium.model.dto.AccountDetailsDto;
-import com.degenerates.memium.model.dto.ImageDto;
-import com.degenerates.memium.model.dto.UpdatePasswordEmailDto;
+import com.degenerates.memium.model.dao.Account;
+import com.degenerates.memium.model.dao.AccountDetails;
+import com.degenerates.memium.model.dao.Image;
+import com.degenerates.memium.model.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.degenerates.memium.util.Constants.TOKEN_VAR;
@@ -24,21 +27,21 @@ public class AccountController {
 
     //                          AVATAR
     @GetMapping("/avatar")
-    public ResponseEntity<?> getAvatar(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<Image> getAvatar(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.getAvatar(token);
     }
 
     @PostMapping("/avatar")
-    public ResponseEntity<?> setAvatar(@RequestHeader HttpHeaders headers, @RequestBody ImageDto imageDto) {
+    public ResponseEntity<Image> setAvatar(@RequestHeader HttpHeaders headers, @RequestBody ImageDto imageDto) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.setAvatar(token, imageDto);
     }
 
     @DeleteMapping("/avatar")
-    public ResponseEntity<?> deleteCurrentAvatar(@RequestHeader HttpHeaders headers) {
+    public HttpStatus deleteCurrentAvatar(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.deleteCurrentAvatar(token);
@@ -50,7 +53,7 @@ public class AccountController {
 
     //                          ACCOUNT
     @GetMapping
-    public ResponseEntity<?> getAccount(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<AccountDto> getAccount(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.getAccount(token);
@@ -62,21 +65,21 @@ public class AccountController {
 
     //                          EMAIL, DETAILS
     @GetMapping("/details")
-    public ResponseEntity<?> getDetails(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<AccountDetailsDto> getDetails(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.getAccountDetails(token);
     }
 
     @PutMapping("/details")
-    public ResponseEntity<?> updateDetails(@RequestHeader HttpHeaders headers, @RequestBody AccountDetailsDto accountDetailsDto) {
+    public ResponseEntity<AccountDetailsDto> updateDetails(@RequestHeader HttpHeaders headers, @RequestBody AccountDetailsDto accountDetailsDto) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.updateAccountDetails(token, accountDetailsDto);
     }
 
     @PutMapping("/email")
-    public ResponseEntity<?> updateAccount(@RequestHeader HttpHeaders headers, UpdatePasswordEmailDto updatePasswordEmailDto) {
+    public ResponseEntity<AccountDto> updateAccount(@RequestHeader HttpHeaders headers, UpdatePasswordEmailDto updatePasswordEmailDto) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.updateAccount(token, updatePasswordEmailDto);
@@ -87,21 +90,21 @@ public class AccountController {
 
     //                          SUBSCRIBE
     @GetMapping("/sub")
-    public ResponseEntity<?> getSub(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<List<AccountShortDto>> getSub(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.getSubscriptions(token);
     }
 
     @PostMapping("/sub")
-    public ResponseEntity<?> subscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
+    public HttpStatus subscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.subscribe(token, accountId);
     }
 
     @DeleteMapping("/sub")
-    public ResponseEntity<?> unSubscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
+    public HttpStatus unSubscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.unsubscribe(token, accountId);
@@ -112,21 +115,21 @@ public class AccountController {
 
     //                          LIKES
     @GetMapping("/like")
-    public ResponseEntity<?> getLikes(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<List<AccountShortDto>> getLikes(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.getLikes(token);
     }
 
     @PostMapping("/like")
-    public ResponseEntity<?> like(@RequestHeader HttpHeaders headers, UUID articleId) {
+    public HttpStatus like(@RequestHeader HttpHeaders headers, UUID articleId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.like(token, articleId);
     }
 
     @DeleteMapping("/like")
-    public ResponseEntity<?> unLike(@RequestHeader HttpHeaders headers, UUID articleId) {
+    public HttpStatus unLike(@RequestHeader HttpHeaders headers, UUID articleId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.unlike(token, articleId);
@@ -139,21 +142,21 @@ public class AccountController {
 
     //                          BLACKLIST
     @GetMapping("/bl")
-    public ResponseEntity<?> getBL(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<List<AccountShortDto>> getBL(@RequestHeader HttpHeaders headers) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.getBlackList(token);
     }
 
     @PostMapping("/bl")
-    public ResponseEntity<?> addBL(@RequestHeader HttpHeaders headers, UUID accountId) {
+    public HttpStatus addBL(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.addToBlackList(token, accountId);
     }
 
     @DeleteMapping("/bl")
-    public ResponseEntity<?> removeBL(@RequestHeader HttpHeaders headers, UUID accountId) {
+    public HttpStatus removeBL(@RequestHeader HttpHeaders headers, UUID accountId) {
         String token = headers.get(TOKEN_VAR).get(0);
 
         return accountFacade.removeFromBlackList(token, accountId);

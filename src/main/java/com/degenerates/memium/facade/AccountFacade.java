@@ -3,20 +3,22 @@ package com.degenerates.memium.facade;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.AccountDetails;
 import com.degenerates.memium.model.dao.Image;
-import com.degenerates.memium.model.dto.AccountDetailsDto;
-import com.degenerates.memium.model.dto.AccountDto;
-import com.degenerates.memium.model.dto.ImageDto;
-import com.degenerates.memium.model.dto.UpdatePasswordEmailDto;
+import com.degenerates.memium.model.dto.*;
 import com.degenerates.memium.model.relations.BlackList;
 import com.degenerates.memium.model.relations.LikeList;
 import com.degenerates.memium.model.relations.SubList;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.*;
+import com.degenerates.memium.util.Validators;
+import com.sun.deploy.xml.BadTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -44,50 +46,59 @@ public class AccountFacade {
     @Autowired
     PasswordEncoder encoder;
 
-    public ResponseEntity<?> getAvatar(String token) {
+    @Autowired
+    Validators validators;
 
-        String str = "";
-        return ResponseEntity.ok(str);
-    }
+    @Autowired
+    ImageService imageService;
 
-    public ResponseEntity<?> setAvatar(String token, ImageDto imageDto) {
-
-        String str = "";
-        return ResponseEntity.ok(str);
-    }
-
-    public ResponseEntity<?> deleteCurrentAvatar(String token) {
-
-        String str = "";
-        return ResponseEntity.ok(str);
-    }
-
-
-
-    public ResponseEntity<?> getAccount(String token) {
-
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
+    private List<AccountShortDto> getAccountShortDtoFromList(List<UUID> list) {
+        List<Account> accountList = accountService.getByIds(list);
+        List<AccountDetails> accountDetailsList = accountDetailsService.getByAccountIds(list);
+        List<AccountShortDto> accountShortDtoList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            AccountShortDto accountShortDto = new AccountShortDto();
+            accountShortDto.setBio(accountDetailsList.get(i).getBio());
+            accountShortDto.setName(accountDetailsList.get(i).getName());
+            accountShortDto.setUsername(accountList.get(i).getUsername());
+            accountShortDto.setImageData(imageService.getByAccountId(list.get(i)).getImage());
+            accountShortDtoList.add(accountShortDto);
         }
-
-        return ResponseEntity.ok(account.toAccountDto());
+        return accountShortDtoList;
     }
 
-    public ResponseEntity<?> getAccountById(UUID accountId) {
-        return ResponseEntity.ok(accountService.getById(accountId));
+    public ResponseEntity<Image> getAvatar(String token) {
+        Account account = validators.validateTokenAndGetOwner(token);
+        Image image = imageService.getByAccountId(account.getAccountId());
+        return ResponseEntity.ok(image);
     }
 
-    public ResponseEntity<?> updateAccount(String token, UpdatePasswordEmailDto updatePasswordEmailDto) {
+    public ResponseEntity<Image> setAvatar(String token, ImageDto imageDto) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
+        Account account = validators.validateTokenAndGetOwner(token);
+        Image image = imageService.getByAccountId(account.getAccountId());
+        return ResponseEntity.ok(image);
+    }
 
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+    public HttpStatus deleteCurrentAvatar(String token) {
+        Account account = validators.validateTokenAndGetOwner(token);
+
+        return HttpStatus.OK;
+    }
+
+
+
+    public ResponseEntity<AccountDto> getAccount(String token) {
+        return ResponseEntity.ok(validators.validateTokenAndGetOwner(token).toAccountDto());
+    }
+
+    public ResponseEntity<AccountDto> getAccountById(UUID accountId) {
+        return ResponseEntity.ok(accountService.getById(accountId).toAccountDto());
+    }
+
+    public ResponseEntity<AccountDto> updateAccount(String token, UpdatePasswordEmailDto updatePasswordEmailDto) {
+
+        Account account = validators.validateTokenAndGetOwner(token);
 
         if (updatePasswordEmailDto.getEmail() != null)
             account.setEmail(updatePasswordEmailDto.getEmail());
@@ -97,160 +108,110 @@ public class AccountFacade {
         return ResponseEntity.ok(accountService.save(account).toAccountDto());
     }
 
-    public ResponseEntity<?> getAccountDetailsById(UUID accountId) {
+    public ResponseEntity<AccountDetailsDto> getAccountDetailsById(UUID accountId) {
         return ResponseEntity.ok(accountDetailsService.getByAccountId(accountId).toAccountDetailsDto());
     }
 
+    public ResponseEntity<AccountDetailsDto> getAccountDetails(String token) {
 
-
-    public ResponseEntity<?> getAccountDetails(String token) {
-
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+        Account account = validators.validateTokenAndGetOwner(token);
 
         return ResponseEntity.ok(accountDetailsService.getByAccountId(account.getAccountId()).toAccountDetailsDto());
     }
 
-    public ResponseEntity<?> updateAccountDetails(String token, AccountDetailsDto accountDetailsDto) {
+    public ResponseEntity<AccountDetailsDto> updateAccountDetails(String token, AccountDetailsDto accountDetailsDto) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+        Account account = validators.validateTokenAndGetOwner(token);
 
         accountDetailsService.deleteById(account.getAccountId());
         return ResponseEntity.ok(accountDetailsService.save(accountDetailsDto.toAccountDetails()).toAccountDetailsDto());
     }
 
-    public ResponseEntity<?> getSubscriptions(String token) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
 
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+    public ResponseEntity<List<AccountShortDto>> getSubscriptions(String token) {
 
-        return ResponseEntity.ok(subService.getAccountData(
+        Account account = validators.validateTokenAndGetOwner(token);
+        List<AccountShortDto> accountShortDtoList = getAccountShortDtoFromList(subService.getAccountData(
                 account.getAccountId()).stream().map(SubList::getSubId).collect(Collectors.toList()));
+
+        return ResponseEntity.ok(accountShortDtoList);
     }
 
-    public ResponseEntity<?> subscribe(String token, UUID accountId) {
+    public HttpStatus subscribe(String token, UUID accountId) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
+        Account account = validators.validateTokenAndGetOwner(token);
 
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
         subService.byAccountSubToAccount(account.getAccountId(), accountId);
 
-        return ResponseEntity.ok("subbed");
+        return HttpStatus.OK;
     }
 
-    public ResponseEntity<?> unsubscribe(String token, UUID accountId) {
+    public HttpStatus unsubscribe(String token, UUID accountId) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
+        Account account = validators.validateTokenAndGetOwner(token);
 
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
         subService.byAccountUnsubAccount(account.getAccountId(), accountId);
 
-        return ResponseEntity.ok("unsubbed");
+        return HttpStatus.OK;
     }
 
 
 
-    public ResponseEntity<?> getLikes(String token) {
+    public ResponseEntity<List<AccountShortDto>> getLikes(String token) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
-
-        return ResponseEntity.ok(likeService.getAccountData(
+        Account account = validators.validateTokenAndGetOwner(token);
+        List<AccountShortDto> accountShortDtoList =  getAccountShortDtoFromList(likeService.getAccountData(
                 account.getAccountId()).stream().map(LikeList::getArticleId).collect(Collectors.toList()));
+
+        return ResponseEntity.ok(accountShortDtoList);
     }
 
-    public ResponseEntity<?> like(String token, UUID articleId) {
+    public HttpStatus like(String token, UUID articleId) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+        Account account = validators.validateTokenAndGetOwner(token);
 
         likeService.byAccountLikePost(account.getAccountId(), articleId);
 
-        return ResponseEntity.ok("liked");
+        return HttpStatus.OK;
     }
 
-    public ResponseEntity<?> unlike(String token, UUID articleId) {
+    public HttpStatus unlike(String token, UUID articleId) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+        Account account = validators.validateTokenAndGetOwner(token);
 
         likeService.byAccountUnlikeAccount(account.getAccountId(), articleId);
 
-        return ResponseEntity.ok("unliked");
+        return HttpStatus.OK;
     }
 
 
 
 
-    public ResponseEntity<?> getBlackList(String token) {
+    public ResponseEntity<List<AccountShortDto>> getBlackList(String token) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
-
-        return ResponseEntity.ok(blackListService.getAccountData(
+        Account account = validators.validateTokenAndGetOwner(token);
+        List<AccountShortDto> list = getAccountShortDtoFromList(blackListService.getAccountData(
                 account.getAccountId()).stream().map(BlackList::getBlockedId).collect(Collectors.toList()));
+
+        return ResponseEntity.ok(list);
     }
 
-    public ResponseEntity<?> addToBlackList(String token, UUID accountId) {
+    public HttpStatus addToBlackList(String token, UUID accountId) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+        Account account = validators.validateTokenAndGetOwner(token);
 
         blackListService.byAccountBlockAccount(account.getAccountId(), accountId);
 
-        return ResponseEntity.ok("blocked");
+        return HttpStatus.OK;
     }
 
-    public ResponseEntity<?> removeFromBlackList(String token, UUID accountId) {
+    public HttpStatus removeFromBlackList(String token, UUID accountId) {
 
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        Account account = accountService.getByUsername(username);
-
-        if (account == null) {
-            return ResponseEntity.badRequest().body("bad token");
-        }
+        Account account = validators.validateTokenAndGetOwner(token);
 
         blackListService.byAccountUnblockAccount(account.getAccountId(), accountId);
 
-        return ResponseEntity.ok("unblocked");
+        return HttpStatus.OK;
     }
 }
