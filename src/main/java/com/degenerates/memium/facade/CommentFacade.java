@@ -4,7 +4,6 @@ import com.degenerates.memium.exceptions.AccessMismatchException;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dao.Comment;
-import com.degenerates.memium.model.dto.ArticleDto;
 import com.degenerates.memium.model.dto.CommentDto;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.AccountService;
@@ -46,7 +45,7 @@ public class CommentFacade {
     public ResponseEntity<CommentDto> createComment(CommentDto commentDto, String token) {
 
         Account account  = validators.validateTokenAndGetOwner(token);
-        validators.validateAccountAndItemOwnership(account,commentDto.getAuthorId());
+        validators.accountOwnsItem(account,commentDto.getAuthorId());
 
         commentDto.setId(UUID.randomUUID());
         commentDto.setDate(new Date());

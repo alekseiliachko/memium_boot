@@ -4,8 +4,6 @@ import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dto.ArticleDto;
 import com.degenerates.memium.model.dto.ArticleShortDto;
-import com.degenerates.memium.security.jwt.JwtUtils;
-import com.degenerates.memium.service.AccountService;
 import com.degenerates.memium.service.ArticleService;
 import com.degenerates.memium.service.CommentService;
 import com.degenerates.memium.service.LikeService;
@@ -25,12 +23,6 @@ public class ArticleFacade {
 
     @Autowired
     ArticleService articleService;
-
-    @Autowired
-    JwtUtils jwtUtils;
-
-    @Autowired
-    AccountService accountService;
 
     @Autowired
     CommentService commentService;
@@ -64,7 +56,7 @@ public class ArticleFacade {
     public ResponseEntity<ArticleDto> updateArticle(ArticleDto articleDto, String token) {
 
         Account account = validators.validateTokenAndGetOwner(token);
-        validators.validateAccountAndItemOwnership(account, articleDto.getAuthorId());
+        validators.accountOwnsItem(account, articleDto.getAuthorId());
 
         Article article = articleService.getById(articleDto.getId());
 
@@ -78,7 +70,7 @@ public class ArticleFacade {
     public HttpStatus deleteArticle(UUID articleId, String token) {
 
         Account account = validators.validateTokenAndGetOwner(token);
-        validators.validateAccountAndItemOwnership(account, articleService.getById(articleId).getAuthorId());
+        validators.accountOwnsItem(account, articleService.getById(articleId).getAuthorId());
 
         articleService.deleteById(articleId);
         commentService.deleteByAtricleId(articleId);

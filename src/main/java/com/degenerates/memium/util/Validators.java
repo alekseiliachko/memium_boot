@@ -33,7 +33,7 @@ public class Validators {
         return account;
     }
 
-    public void validateAccountAndItemOwnership(Account account, UUID itemOwnerId) {
+    public void accountOwnsItem(Account account, UUID itemOwnerId) {
         if (!itemOwnerId.equals(account.getAccountId())) {
             throw new AccessMismatchException();
         }
