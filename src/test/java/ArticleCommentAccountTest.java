@@ -6,7 +6,7 @@ import com.degenerates.memium.model.relations.LikeList;
 import com.degenerates.memium.service.ArticleService;
 import com.degenerates.memium.service.CommentService;
 import com.degenerates.memium.service.LikeService;
-import com.degenerates.memium.util.Validators;
+import com.degenerates.memium.util.Utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,7 @@ public class ArticleCommentAccountTest {
     LikeService likeService;
 
     @Mock
-    Validators validators;
+    Utils utils;
 
     @InjectMocks
     ArticleFacade articleFacade;
@@ -85,7 +83,7 @@ public class ArticleCommentAccountTest {
 
         Mockito.when(commentService.getByArticleId(Mockito.any(UUID.class))).thenReturn(comments);
         Mockito.when(articleService.getById(Mockito.any(UUID.class))).thenReturn(article);
-        Mockito.when(validators.validateTokenAndGetOwner(Mockito.anyString())).thenReturn(account);
+        Mockito.when(utils.validateTokenAndGetOwner(Mockito.anyString())).thenReturn(account);
 
         Mockito.doAnswer(invocation -> {
             final UUID uuid = (UUID) (invocation.getArguments())[0];

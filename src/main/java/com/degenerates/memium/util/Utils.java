@@ -6,12 +6,15 @@ import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+import static com.degenerates.memium.util.Constants.TOKEN_VAR;
+
 @Component
-public class Validators {
+public class Utils {
 
     @Autowired
     JwtUtils jwtUtils;
@@ -37,5 +40,12 @@ public class Validators {
         if (!itemOwnerId.equals(account.getAccountId())) {
             throw new AccessMismatchException();
         }
+    }
+
+    public String extractToken(HttpHeaders headers) {
+        String tokenBearer = headers.get(TOKEN_VAR).get(0);
+        String token = tokenBearer.substring(7, tokenBearer.length());
+
+        return token;
     }
 }

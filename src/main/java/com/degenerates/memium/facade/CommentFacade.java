@@ -9,7 +9,7 @@ import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.AccountService;
 import com.degenerates.memium.service.ArticleService;
 import com.degenerates.memium.service.CommentService;
-import com.degenerates.memium.util.Validators;
+import com.degenerates.memium.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class CommentFacade {
     JwtUtils jwtUtils;
 
     @Autowired
-    Validators validators;
+    Utils utils;
 
     public ResponseEntity<List<CommentDto>> getCommentsForArticle(UUID articleId) {
         return ResponseEntity.ok(commentService.getByArticleId(articleId).stream().map(Comment::toCommentDto).collect(Collectors.toList()));
@@ -44,8 +44,8 @@ public class CommentFacade {
 
     public ResponseEntity<CommentDto> createComment(CommentDto commentDto, String token) {
 
-        Account account  = validators.validateTokenAndGetOwner(token);
-        validators.accountOwnsItem(account,commentDto.getAuthorId());
+        Account account  = utils.validateTokenAndGetOwner(token);
+        utils.accountOwnsItem(account,commentDto.getAuthorId());
 
         commentDto.setId(UUID.randomUUID());
         commentDto.setDate(new Date());
@@ -59,7 +59,7 @@ public class CommentFacade {
 
         Article article = articleService.getById(comment.getArticleId());
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         if (!comment.getAuthorId().equals(account.getAccountId()) && !article.getAuthorId().equals(account.getAccountId())) {
             throw new AccessMismatchException();

@@ -1,5 +1,6 @@
 package com.degenerates.memium.facade;
 
+import com.degenerates.memium.exceptions.CorruptedFileException;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.AccountDetails;
 import com.degenerates.memium.model.dao.Image;
@@ -9,14 +10,15 @@ import com.degenerates.memium.model.relations.LikeList;
 import com.degenerates.memium.model.relations.SubList;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.*;
-import com.degenerates.memium.util.Validators;
-import com.sun.deploy.xml.BadTokenException;
+import com.degenerates.memium.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +49,7 @@ public class AccountFacade {
     PasswordEncoder encoder;
 
     @Autowired
-    Validators validators;
+    Utils utils;
 
     @Autowired
     ImageService imageService;
@@ -68,20 +70,32 @@ public class AccountFacade {
     }
 
     public ResponseEntity<Image> getAvatar(String token) {
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
         Image image = imageService.getByAccountId(account.getAccountId());
         return ResponseEntity.ok(image);
     }
 
-    public ResponseEntity<Image> setAvatar(String token, ImageDto imageDto) {
+    public ResponseEntity<Image> getAvatar(UUID id) {
+        Image image = imageService.getByAccountId(id);
+        return ResponseEntity.ok(image);
+    }
 
-        Account account = validators.validateTokenAndGetOwner(token);
-        Image image = imageService.getByAccountId(account.getAccountId());
+    public ResponseEntity<Image> setAvatar(String token, MultipartFile imageFile) {
+
+        Account account = utils.validateTokenAndGetOwner(token);
+        Image image = new Image();
+        image.setAccountId(account.getAccountId());
+        try {
+            image.setImage(imageFile.getBytes());
+        } catch (IOException e) {
+            throw new CorruptedFileException();
+        }
+        image = imageService.save(image);
         return ResponseEntity.ok(image);
     }
 
     public HttpStatus deleteCurrentAvatar(String token) {
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         return HttpStatus.OK;
     }
@@ -89,7 +103,7 @@ public class AccountFacade {
 
 
     public ResponseEntity<AccountDto> getAccount(String token) {
-        return ResponseEntity.ok(validators.validateTokenAndGetOwner(token).toAccountDto());
+        return ResponseEntity.ok(utils.validateTokenAndGetOwner(token).toAccountDto());
     }
 
     public ResponseEntity<AccountDto> getAccountById(UUID accountId) {
@@ -98,7 +112,7 @@ public class AccountFacade {
 
     public ResponseEntity<AccountDto> updateAccount(String token, UpdatePasswordEmailDto updatePasswordEmailDto) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         if (updatePasswordEmailDto.getEmail() != null)
             account.setEmail(updatePasswordEmailDto.getEmail());
@@ -114,14 +128,14 @@ public class AccountFacade {
 
     public ResponseEntity<AccountDetailsDto> getAccountDetails(String token) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         return ResponseEntity.ok(accountDetailsService.getByAccountId(account.getAccountId()).toAccountDetailsDto());
     }
 
     public ResponseEntity<AccountDetailsDto> updateAccountDetails(String token, AccountDetailsDto accountDetailsDto) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         accountDetailsService.deleteById(account.getAccountId());
         return ResponseEntity.ok(accountDetailsService.save(accountDetailsDto.toAccountDetails()).toAccountDetailsDto());
@@ -131,7 +145,7 @@ public class AccountFacade {
 
     public ResponseEntity<List<AccountShortDto>> getSubscriptions(String token) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
         List<AccountShortDto> accountShortDtoList = getAccountShortDtoFromList(subService.getAccountData(
                 account.getAccountId()).stream().map(SubList::getSubId).collect(Collectors.toList()));
 
@@ -140,7 +154,7 @@ public class AccountFacade {
 
     public HttpStatus subscribe(String token, UUID accountId) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         subService.byAccountSubToAccount(account.getAccountId(), accountId);
 
@@ -149,7 +163,7 @@ public class AccountFacade {
 
     public HttpStatus unsubscribe(String token, UUID accountId) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         subService.byAccountUnsubAccount(account.getAccountId(), accountId);
 
@@ -160,7 +174,7 @@ public class AccountFacade {
 
     public ResponseEntity<List<AccountShortDto>> getLikes(String token) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
         List<AccountShortDto> accountShortDtoList =  getAccountShortDtoFromList(likeService.getAccountData(
                 account.getAccountId()).stream().map(LikeList::getArticleId).collect(Collectors.toList()));
 
@@ -169,7 +183,7 @@ public class AccountFacade {
 
     public HttpStatus like(String token, UUID articleId) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         likeService.byAccountLikePost(account.getAccountId(), articleId);
 
@@ -178,7 +192,7 @@ public class AccountFacade {
 
     public HttpStatus unlike(String token, UUID articleId) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         likeService.byAccountUnlikeAccount(account.getAccountId(), articleId);
 
@@ -190,7 +204,7 @@ public class AccountFacade {
 
     public ResponseEntity<List<AccountShortDto>> getBlackList(String token) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
         List<AccountShortDto> list = getAccountShortDtoFromList(blackListService.getAccountData(
                 account.getAccountId()).stream().map(BlackList::getBlockedId).collect(Collectors.toList()));
 
@@ -199,7 +213,7 @@ public class AccountFacade {
 
     public HttpStatus addToBlackList(String token, UUID accountId) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         blackListService.byAccountBlockAccount(account.getAccountId(), accountId);
 
@@ -208,7 +222,7 @@ public class AccountFacade {
 
     public HttpStatus removeFromBlackList(String token, UUID accountId) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         blackListService.byAccountUnblockAccount(account.getAccountId(), accountId);
 

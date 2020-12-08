@@ -2,6 +2,7 @@ package com.degenerates.memium.controller;
 
 import com.degenerates.memium.facade.ArticleFacade;
 import com.degenerates.memium.model.dto.ArticleDto;
+import com.degenerates.memium.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,24 +21,21 @@ public class ArticleController {
     @Autowired
     ArticleFacade articleFacade;
 
+    @Autowired
+    Utils utils;
+
     @PostMapping
     public ResponseEntity<ArticleDto> createArticle(@RequestHeader HttpHeaders headers, @RequestBody ArticleDto articleDto) {
-        String token = headers.get(TOKEN_VAR).get(0);
-
-        return articleFacade.createArticle(articleDto, token);
+        return articleFacade.createArticle(articleDto, utils.extractToken(headers));
     }
 
     @PutMapping
     public ResponseEntity<ArticleDto> updateArticle(@RequestHeader HttpHeaders headers, @RequestBody ArticleDto articleDto) {
-        String token = headers.get(TOKEN_VAR).get(0);
-
-        return articleFacade.updateArticle(articleDto, token);
+        return articleFacade.updateArticle(articleDto, utils.extractToken(headers));
     }
 
     @DeleteMapping("/{articleId}")
     public HttpStatus deleteArticle(@RequestHeader HttpHeaders headers, @PathVariable UUID articleId) {
-        String token = headers.get(TOKEN_VAR).get(0);
-
-        return articleFacade.deleteArticle(articleId, token);
+        return articleFacade.deleteArticle(articleId, utils.extractToken(headers));
     }
 }

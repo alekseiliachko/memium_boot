@@ -2,6 +2,7 @@ package com.degenerates.memium.controller;
 
 import com.degenerates.memium.facade.AccountFacade;
 import com.degenerates.memium.model.dao.Account;
+import com.degenerates.memium.model.dao.Image;
 import com.degenerates.memium.model.dto.AccountDetailsDto;
 import com.degenerates.memium.model.dto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,16 @@ public class AccountOpenController {
 
     @GetMapping("/{accountId}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable UUID accountId) {
-
         return accountFacade.getAccountById(accountId);
+    }
+
+    @GetMapping("/avatar/{accountId}")
+    public ResponseEntity<Image> getAccountAvatar(@PathVariable UUID accountId) {
+        return accountFacade.getAvatar(accountId);
     }
 
     @GetMapping("/details/{accountId}")
     public ResponseEntity<AccountDetailsDto> getAccountDetails(@PathVariable UUID accountId) {
-
         return accountFacade.getAccountDetailsById(accountId);
     }
 }

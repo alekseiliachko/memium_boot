@@ -5,7 +5,7 @@ import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dao.Comment;
 import com.degenerates.memium.service.ArticleService;
 import com.degenerates.memium.service.CommentService;
-import com.degenerates.memium.util.Validators;
+import com.degenerates.memium.util.Utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ public class CommentTokenDeleteTest {
     ArticleService articleService;
 
     @Mock
-    Validators validators;
+    Utils utils;
 
     @InjectMocks
     CommentFacade commentFacade;
@@ -67,7 +67,7 @@ public class CommentTokenDeleteTest {
 
         Mockito.when(commentService.getById(Mockito.any(UUID.class))).thenReturn(comment);
         Mockito.when(articleService.getById(Mockito.any(UUID.class))).thenReturn(article);
-        Mockito.when(validators.validateTokenAndGetOwner(Mockito.anyString())).thenReturn(account);
+        Mockito.when(utils.validateTokenAndGetOwner(Mockito.anyString())).thenReturn(account);
 
         Mockito.doNothing().when(commentService).deleteById(Mockito.any(UUID.class));
     }

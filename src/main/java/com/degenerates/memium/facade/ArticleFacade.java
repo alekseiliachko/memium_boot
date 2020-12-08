@@ -7,7 +7,7 @@ import com.degenerates.memium.model.dto.ArticleShortDto;
 import com.degenerates.memium.service.ArticleService;
 import com.degenerates.memium.service.CommentService;
 import com.degenerates.memium.service.LikeService;
-import com.degenerates.memium.util.Validators;
+import com.degenerates.memium.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class ArticleFacade {
     LikeService likeService;
 
     @Autowired
-    Validators validators;
+    Utils utils;
 
     public ResponseEntity<ArticleDto> getArticle(UUID articleId) {
         return ResponseEntity.ok(articleService.getById(articleId).toArticleDto());
@@ -43,7 +43,7 @@ public class ArticleFacade {
 
     public ResponseEntity<ArticleDto> createArticle(ArticleDto articleDto, String token) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
+        Account account = utils.validateTokenAndGetOwner(token);
 
         articleDto.setId(UUID.randomUUID());
         articleDto.setDate(new Date());
@@ -55,8 +55,8 @@ public class ArticleFacade {
 
     public ResponseEntity<ArticleDto> updateArticle(ArticleDto articleDto, String token) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
-        validators.accountOwnsItem(account, articleDto.getAuthorId());
+        Account account = utils.validateTokenAndGetOwner(token);
+        utils.accountOwnsItem(account, articleDto.getAuthorId());
 
         Article article = articleService.getById(articleDto.getId());
 
@@ -69,8 +69,8 @@ public class ArticleFacade {
 
     public HttpStatus deleteArticle(UUID articleId, String token) {
 
-        Account account = validators.validateTokenAndGetOwner(token);
-        validators.accountOwnsItem(account, articleService.getById(articleId).getAuthorId());
+        Account account = utils.validateTokenAndGetOwner(token);
+        utils.accountOwnsItem(account, articleService.getById(articleId).getAuthorId());
 
         articleService.deleteById(articleId);
         commentService.deleteByAtricleId(articleId);
