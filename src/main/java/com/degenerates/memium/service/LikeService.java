@@ -25,6 +25,10 @@ public class LikeService {
         return repository.countByArticleId(articleId);
     };
 
+    public Boolean checkIfAccountLikedArticle(UUID accountId, UUID articleId) {
+        return repository.existsByAccountIdAndArticleId(accountId, articleId);
+    }
+
     public void byAccountLikePost(UUID accountId, UUID likeId) {
         LikeList likeList = new LikeList(accountId, likeId);
         if (!repository.existsByAccountIdAndArticleId(accountId, likeId))

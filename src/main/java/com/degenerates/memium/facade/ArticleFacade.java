@@ -59,6 +59,7 @@ public class ArticleFacade {
         return ResponseEntity.ok(articles.stream().map(Article::toArticleShortDto).collect(Collectors.toList()));
     }
 
+
     public ResponseEntity<List<ArticleShortDto>> getArticlesForAccountId(UUID accountId) {
         List<Article> articles = articleService.getByAccountId(accountId);
         log.info("Found " + articles.size() + " articles from account with Id: " + accountId);
@@ -87,7 +88,7 @@ public class ArticleFacade {
         return articleImage.getImage();
     }
 
-    public byte[] setArticleImage(String token, UUID articleId, MultipartFile imageFile) {
+    public ResponseEntity<UUID> setArticleImage(String token, UUID articleId, MultipartFile imageFile) {
 
         Account account = utils.validateTokenAndGetOwner(token);
         ArticleImage articleImage = new ArticleImage();
@@ -112,7 +113,7 @@ public class ArticleFacade {
         articleImage = articleImageService.save(articleImage);
         log.info("ArticleImage image set: " + articleId);
 
-        return articleImage.getImage();
+        return ResponseEntity.ok(articleImage.getArticleId());
     }
 
     public ResponseEntity<ArticleDto> updateArticle(ArticleDto articleDto, String token) {
@@ -145,5 +146,12 @@ public class ArticleFacade {
 
         return HttpStatus.OK;
         
+    }
+
+    public ResponseEntity<Boolean> getArticlesForAccountId(UUID articleId, String token) {
+        Account account = utils.validateTokenAndGetOwner(token);
+        Boolean flag = likeService.checkIfAccountLikedArticle(account.getAccountId(), articleId);
+        log.info("Account " + account.getUsername() +" like on " + articleId + " is: " + flag.toString());
+        return ResponseEntity.ok(flag);
     }
 }
