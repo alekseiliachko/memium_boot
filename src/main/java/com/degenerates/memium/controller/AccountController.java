@@ -35,7 +35,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/avatar")
@@ -50,7 +50,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @PostMapping("/avatar")
@@ -65,7 +65,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @DeleteMapping("/avatar")
@@ -85,7 +85,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping
@@ -105,7 +105,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/details")
@@ -120,7 +120,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @PutMapping("/details")
@@ -135,7 +135,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @PutMapping("/email")
@@ -154,7 +154,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/sub")
@@ -169,7 +169,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @PostMapping("/sub/{accountId}")
@@ -184,7 +184,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @DeleteMapping("/sub/{accountId}")
@@ -203,7 +203,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/like")
@@ -218,7 +218,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @PostMapping("/like/{articleId}")
@@ -233,7 +233,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @DeleteMapping("/like/{articleId}")
@@ -254,7 +254,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/bl")
@@ -268,7 +268,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @PostMapping("/bl/{accountId}")
@@ -282,7 +282,7 @@ public class AccountController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @DeleteMapping("/bl/{accountId}")

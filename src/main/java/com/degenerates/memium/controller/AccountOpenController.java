@@ -28,7 +28,7 @@ public class AccountOpenController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/{accountId}")
@@ -43,7 +43,7 @@ public class AccountOpenController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/avatar/{accountId}")
@@ -58,7 +58,7 @@ public class AccountOpenController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/details/{accountId}")

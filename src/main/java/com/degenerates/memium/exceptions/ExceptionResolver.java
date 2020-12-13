@@ -36,7 +36,7 @@ public class ExceptionResolver extends ResponseEntityExceptionHandler {
         log.error("Not allowed to do so");
         String bodyOfResponse = "not authorised";
         return handleExceptionInternal(ex, bodyOfResponse,
-                new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED, request);
+                new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
 

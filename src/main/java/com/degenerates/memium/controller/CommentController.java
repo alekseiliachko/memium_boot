@@ -36,7 +36,7 @@ public class CommentController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @PostMapping
@@ -51,7 +51,7 @@ public class CommentController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @DeleteMapping("/{commentId}")

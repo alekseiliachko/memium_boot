@@ -31,7 +31,7 @@ public class SearchController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/{string}")
@@ -46,7 +46,7 @@ public class SearchController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/account/{string}")
@@ -61,7 +61,7 @@ public class SearchController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/article/{string}")
@@ -76,7 +76,7 @@ public class SearchController {
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
-            @ApiResponse(code = 405, message = "Not allowed to do so"),
+            @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/category/{string}")
