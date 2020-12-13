@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BlackListService {
@@ -14,8 +15,10 @@ public class BlackListService {
     @Autowired
     BlackListRepository repository;
 
-    public List<BlackList> getAccountData(UUID accountId) {
-        return repository.findByAccountId(accountId);
+    public List<UUID> getAccountData(UUID accountId) {
+        return repository.findByAccountId(accountId)
+                .stream().map(BlackList::getBlockedId)
+                .collect(Collectors.toList());
     };
 
     public void byAccountBlockAccount(UUID accountId, UUID blockId) {

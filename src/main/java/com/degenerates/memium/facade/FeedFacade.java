@@ -1,33 +1,52 @@
 package com.degenerates.memium.facade;
 
-import com.degenerates.memium.model.dto.FeedDto;
-import com.degenerates.memium.service.AccountService;
-import com.degenerates.memium.service.BlackListService;
-import com.degenerates.memium.service.LikeService;
-import com.degenerates.memium.service.SubService;
+import com.degenerates.memium.model.dao.Account;
+import com.degenerates.memium.model.dao.Article;
+import com.degenerates.memium.model.dto.AccountShortDto;
+import com.degenerates.memium.model.dto.ArticleShortDto;
+import com.degenerates.memium.model.dto.QueryDto;
+import com.degenerates.memium.model.relations.SubList;
+import com.degenerates.memium.service.*;
+import com.degenerates.memium.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class FeedFacade {
 
     @Autowired
-    AccountService accountService;
+    AccountShortService accountShortService;
+
+    @Autowired
+    ArticleService articleService;
 
     @Autowired
     SubService subService;
 
     @Autowired
-    BlackListService blackListService;
+    Utils utils;
 
-    @Autowired
-    LikeService likeService;
+    public ResponseEntity<QueryDto> getFeedForUserToken(String token) {
+        QueryDto queryDto = new QueryDto();
 
-    public ResponseEntity<FeedDto> getFeedForUserToken(String token) {
-        FeedDto feedDto = new FeedDto();
+        Account account = utils.validateTokenAndGetOwner(token);
+        List<UUID> accountIds = subService.getAccountSubbedBy(account.getAccountId());
 
+        List<AccountShortDto> accountShortDtoList = accountShortService.getAccountsByIds(accountIds);
 
-        return ResponseEntity.ok(feedDto);
+        List<ArticleShortDto> articleShortDtoList =
+                articleService.getLatestByAuthorIds(accountIds)
+                .stream().map(Article::toArticleShortDto)
+                .collect(Collectors.toList());
+
+        queryDto.setArticles(articleShortDtoList);
+        queryDto.setAccounts(accountShortDtoList);
+
+        return ResponseEntity.ok(queryDto);
     }
 }

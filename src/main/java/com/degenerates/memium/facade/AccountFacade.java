@@ -3,6 +3,7 @@ package com.degenerates.memium.facade;
 import com.degenerates.memium.exceptions.CorruptedFileException;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.AccountDetails;
+import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dao.Image;
 import com.degenerates.memium.model.dto.*;
 import com.degenerates.memium.model.relations.BlackList;
@@ -31,6 +32,9 @@ public class AccountFacade {
     AccountService accountService;
 
     @Autowired
+    ArticleService articleService;
+
+    @Autowired
     AccountDetailsService accountDetailsService;
 
     @Autowired
@@ -54,20 +58,8 @@ public class AccountFacade {
     @Autowired
     ImageService imageService;
 
-    private List<AccountShortDto> getAccountShortDtoFromList(List<UUID> list) {
-        List<Account> accountList = accountService.getByIds(list);
-        List<AccountDetails> accountDetailsList = accountDetailsService.getByAccountIds(list);
-        List<AccountShortDto> accountShortDtoList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            AccountShortDto accountShortDto = new AccountShortDto();
-            accountShortDto.setBio(accountDetailsList.get(i).getBio());
-            accountShortDto.setName(accountDetailsList.get(i).getName());
-            accountShortDto.setUsername(accountList.get(i).getUsername());
-            accountShortDto.setImageData(imageService.getByAccountId(list.get(i)).getImage());
-            accountShortDtoList.add(accountShortDto);
-        }
-        return accountShortDtoList;
-    }
+    @Autowired
+    AccountShortService accountShortService;
 
     public ResponseEntity<Image> getAvatar(String token) {
         Account account = utils.validateTokenAndGetOwner(token);
@@ -146,8 +138,8 @@ public class AccountFacade {
     public ResponseEntity<List<AccountShortDto>> getSubscriptions(String token) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-        List<AccountShortDto> accountShortDtoList = getAccountShortDtoFromList(subService.getAccountData(
-                account.getAccountId()).stream().map(SubList::getSubId).collect(Collectors.toList()));
+        List<AccountShortDto> accountShortDtoList = accountShortService.getAccountsByIds(
+                subService.getAccountSubbedBy(account.getAccountId()));
 
         return ResponseEntity.ok(accountShortDtoList);
     }
@@ -172,11 +164,12 @@ public class AccountFacade {
 
 
 
-    public ResponseEntity<List<AccountShortDto>> getLikes(String token) {
+    public ResponseEntity<List<ArticleShortDto>> getLikes(String token) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-        List<AccountShortDto> accountShortDtoList =  getAccountShortDtoFromList(likeService.getAccountData(
-                account.getAccountId()).stream().map(LikeList::getArticleId).collect(Collectors.toList()));
+        List<ArticleShortDto> accountShortDtoList = articleService.getByAccountId(account.getAccountId()).
+                stream().map(Article::toArticleShortDto)
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(accountShortDtoList);
     }
@@ -205,10 +198,11 @@ public class AccountFacade {
     public ResponseEntity<List<AccountShortDto>> getBlackList(String token) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-        List<AccountShortDto> list = getAccountShortDtoFromList(blackListService.getAccountData(
-                account.getAccountId()).stream().map(BlackList::getBlockedId).collect(Collectors.toList()));
+        List<AccountShortDto> accountShortDtoList = accountShortService.getAccountsByIds(
+                likeService.getAccountData(account.getAccountId()));
 
-        return ResponseEntity.ok(list);
+
+        return ResponseEntity.ok(accountShortDtoList);
     }
 
     public HttpStatus addToBlackList(String token, UUID accountId) {

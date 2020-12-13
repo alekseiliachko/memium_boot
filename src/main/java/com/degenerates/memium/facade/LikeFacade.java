@@ -13,8 +13,8 @@ public class LikeFacade {
     @Autowired
     LikeService likeService;
 
-    public ResponseEntity<Integer> getLikeAmountForArticle(UUID articleId) {
+    public ResponseEntity<Long> getLikeAmountForArticle(UUID articleId) {
 
-        return ResponseEntity.ok(likeService.getLikesForArticle(articleId).size());
+        return ResponseEntity.ok(likeService.getLikeCountForArticle(articleId));
     }
 }

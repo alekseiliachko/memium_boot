@@ -16,7 +16,7 @@ public class LikeOpenController {
     LikeFacade likeFacade;
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<Integer> getLikeForArticle(@PathVariable UUID articleId) {
+    public ResponseEntity<Long> getLikeForArticle(@PathVariable UUID articleId) {
         return likeFacade.getLikeAmountForArticle(articleId);
     }
 }

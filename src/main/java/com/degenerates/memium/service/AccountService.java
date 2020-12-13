@@ -16,6 +16,10 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepository;
 
+    public List<Account> getByUsernameR(String username) {
+        return accountRepository.findByUsernameRegex(username);
+    }
+
     public Account save(Account account) {
         Account accountSaved = accountRepository.save(account);
         log.info("Saved accound: " + account.getAccountId());

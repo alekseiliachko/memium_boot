@@ -68,12 +68,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/article/**").hasRole("USER")
 				.antMatchers("/api/comment/**").hasRole("USER")
 				.antMatchers("/api/feed/**").hasRole("USER")
-				.antMatchers("/api/auth/**").permitAll()
 				.antMatchers("/api/open/account/**").permitAll()
 				.antMatchers("/api/open/article/**").permitAll()
 				.antMatchers("/api/open/comment/**").permitAll()
 				.antMatchers("/api/open/like/**").permitAll()
 				.antMatchers("/api/open/sub/**").permitAll()
+				.antMatchers("/api/search/**").permitAll()
+				.antMatchers("/api/auth/**").permitAll()
 
 
 				.anyRequest().authenticated();

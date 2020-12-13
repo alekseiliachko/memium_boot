@@ -15,4 +15,6 @@ public interface AccountRepository extends MongoRepository<Account, UUID> {
     Boolean existsByUsername(String username);
 
     List<Account> findByAccountId(List<UUID> accountIds);
+
+    List<Account> findByUsernameRegex(String username);
 }

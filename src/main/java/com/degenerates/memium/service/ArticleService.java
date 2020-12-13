@@ -15,6 +15,18 @@ public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
 
+    public List<Article> getByTitleR(String title) {
+        return articleRepository.findByTitleRegexOrderByDate(title);
+    }
+
+    public List<Article> getByCategoryR(String category) {
+        return articleRepository.findByCategoryRegexOrderByDate(category);
+    }
+
+    public List<Article> getLatestByAuthorIds(List<UUID> authorIds) {
+        return articleRepository.findByAuthorIdOrderByDate(authorIds);
+    }
+
     public Article getById(UUID articleId) {
         return articleRepository.findById(articleId).orElseThrow(EntityNotFoundException::new);
     }

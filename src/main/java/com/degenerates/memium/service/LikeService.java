@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class LikeService {
@@ -14,12 +15,14 @@ public class LikeService {
     @Autowired
     LikeListRepository repository;
 
-    public List<LikeList> getAccountData(UUID accountId) {
-        return repository.findByAccountId(accountId);
+    public List<UUID> getAccountData(UUID accountId) {
+        return repository.findByAccountId(accountId)
+                .stream().map(LikeList::getArticleId)
+                .collect(Collectors.toList());
     };
 
-    public List<LikeList> getLikesForArticle(UUID articleId) {
-        return repository.findByArticleId(articleId);
+    public Long getLikeCountForArticle(UUID articleId) {
+        return repository.countByArticleId(articleId);
     };
 
     public void byAccountLikePost(UUID accountId, UUID likeId) {

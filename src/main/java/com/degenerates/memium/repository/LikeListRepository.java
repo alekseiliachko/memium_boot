@@ -13,6 +13,8 @@ public interface LikeListRepository extends MongoRepository<LikeList, UUID> {
 
     List<LikeList> findByArticleId(UUID accountId);
 
+    Long countByArticleId(UUID accountId);
+
     LikeList findByAccountIdAndArticleId(UUID accountId, UUID articleId);
 
     Boolean existsByAccountIdAndArticleId(UUID accountId, UUID articleId);

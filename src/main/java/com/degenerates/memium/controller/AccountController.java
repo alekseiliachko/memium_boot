@@ -100,7 +100,7 @@ public class AccountController {
 
     //                          LIKES
     @GetMapping("/like")
-    public ResponseEntity<List<AccountShortDto>> getLikes(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<List<ArticleShortDto>> getLikes(@RequestHeader HttpHeaders headers) {
         return accountFacade.getLikes(utils.extractToken(headers));
     }
 

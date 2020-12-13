@@ -3,6 +3,9 @@ package com.degenerates.memium.util;
 import com.degenerates.memium.exceptions.AccessMismatchException;
 import com.degenerates.memium.exceptions.BadTokenException;
 import com.degenerates.memium.model.dao.Account;
+import com.degenerates.memium.model.dao.AccountDetails;
+import com.degenerates.memium.model.dao.Image;
+import com.degenerates.memium.model.dto.AccountShortDto;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,16 @@ public class Utils {
 
     @Autowired
     AccountService accountService;
+
+    public static AccountShortDto toAccountShortDto(Account account, AccountDetails accountDetails, Image image) {
+        AccountShortDto accountShortDto = new AccountShortDto();
+        accountShortDto.setAccountId(account.getAccountId());
+        accountShortDto.setImageData(image.getImage());
+        accountShortDto.setName(accountDetails.getName());
+        accountShortDto.setUsername(account.getUsername());
+        accountShortDto.setBio(accountDetails.getBio());
+        return accountShortDto;
+    }
 
     public Account validateTokenAndGetOwner(String token) {
 
