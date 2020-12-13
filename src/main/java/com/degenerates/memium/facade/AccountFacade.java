@@ -3,15 +3,13 @@ package com.degenerates.memium.facade;
 import com.degenerates.memium.exceptions.CorruptedFileException;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.AccountDetails;
+import com.degenerates.memium.model.dao.AccountImage;
 import com.degenerates.memium.model.dao.Article;
-import com.degenerates.memium.model.dao.Image;
 import com.degenerates.memium.model.dto.*;
-import com.degenerates.memium.model.relations.BlackList;
-import com.degenerates.memium.model.relations.LikeList;
-import com.degenerates.memium.model.relations.SubList;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.*;
 import com.degenerates.memium.util.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +18,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class AccountFacade {
 
@@ -47,59 +45,76 @@ public class AccountFacade {
     LikeService likeService;
 
     @Autowired
-    JwtUtils jwtUtils;
-
-    @Autowired
     PasswordEncoder encoder;
 
     @Autowired
     Utils utils;
 
     @Autowired
-    ImageService imageService;
+    AccountImageService accountImageService;
 
     @Autowired
     AccountShortService accountShortService;
 
-    public ResponseEntity<Image> getAvatar(String token) {
+    public byte[] getAvatar(String token) {
         Account account = utils.validateTokenAndGetOwner(token);
-        Image image = imageService.getByAccountId(account.getAccountId());
-        return ResponseEntity.ok(image);
+        AccountImage accountImage = accountImageService.getByAccountId(account.getAccountId());
+
+        log.info("Found image for account: " + account.getAccountId());
+
+        return accountImage.getImage();
     }
 
-    public ResponseEntity<Image> getAvatar(UUID id) {
-        Image image = imageService.getByAccountId(id);
-        return ResponseEntity.ok(image);
+    public byte[] getAvatar(UUID id) {
+        AccountImage accountImage = accountImageService.getByAccountId(id);
+
+        log.info("Found image for account: " + id);
+
+        return accountImage.getImage();
     }
 
-    public ResponseEntity<Image> setAvatar(String token, MultipartFile imageFile) {
+    public byte[] setAvatar(String token, MultipartFile imageFile) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-        Image image = new Image();
-        image.setAccountId(account.getAccountId());
+        AccountImage accountImage = new AccountImage();
+
+        accountImage.setAccountId(account.getAccountId());
         try {
-            image.setImage(imageFile.getBytes());
+            accountImage.setImage(imageFile.getBytes());
         } catch (IOException e) {
             throw new CorruptedFileException();
         }
-        image = imageService.save(image);
-        return ResponseEntity.ok(image);
+        if (accountImageService.checkIfAlreadySet(account.getAccountId())) {
+            accountImageService.deleteByAccountId(account.getAccountId());
+            log.info("Avatar already set, deleted: " + account.getAccountId());
+        }
+        accountImage = accountImageService.save(accountImage);
+        log.info("Set avatar for: " + account.getAccountId());
+        return accountImage.getImage();
     }
 
     public HttpStatus deleteCurrentAvatar(String token) {
         Account account = utils.validateTokenAndGetOwner(token);
-
+        accountImageService.deleteByAccountId(account.getAccountId());
+        log.info("Deleted avatar for: " + account.getAccountId());
         return HttpStatus.OK;
     }
 
 
 
     public ResponseEntity<AccountDto> getAccount(String token) {
-        return ResponseEntity.ok(utils.validateTokenAndGetOwner(token).toAccountDto());
+
+        Account account = utils.validateTokenAndGetOwner(token);
+        log.info("Found account with Id: " + account.getAccountId());
+
+        return ResponseEntity.ok(account.toAccountDto());
     }
 
     public ResponseEntity<AccountDto> getAccountById(UUID accountId) {
-        return ResponseEntity.ok(accountService.getById(accountId).toAccountDto());
+        Account account = accountService.getById(accountId);
+        log.info("Found account by Id: " + accountId);
+
+        return ResponseEntity.ok(account.toAccountDto());
     }
 
     public ResponseEntity<AccountDto> updateAccount(String token, UpdatePasswordEmailDto updatePasswordEmailDto) {
@@ -111,26 +126,31 @@ public class AccountFacade {
         if (updatePasswordEmailDto.getPassword() != null)
             account.setPassword(encoder.encode(updatePasswordEmailDto.getPassword()));
 
-        return ResponseEntity.ok(accountService.save(account).toAccountDto());
+        account = accountService.save(account);
+        log.info("Account updated: " + account.getAccountId());
+
+        return ResponseEntity.ok(account.toAccountDto());
     }
 
     public ResponseEntity<AccountDetailsDto> getAccountDetailsById(UUID accountId) {
-        return ResponseEntity.ok(accountDetailsService.getByAccountId(accountId).toAccountDetailsDto());
+        AccountDetails accountDetails = accountDetailsService.getByAccountId(accountId);
+        log.info("Found accountDetails by Id: " + accountId);
+        return ResponseEntity.ok(accountDetails.toAccountDetailsDto());
     }
 
     public ResponseEntity<AccountDetailsDto> getAccountDetails(String token) {
-
         Account account = utils.validateTokenAndGetOwner(token);
-
-        return ResponseEntity.ok(accountDetailsService.getByAccountId(account.getAccountId()).toAccountDetailsDto());
+        AccountDetails accountDetails = accountDetailsService.getByAccountId(account.getAccountId());
+        log.info("Found accountDetails with Id: " + account.getAccountId());
+        return ResponseEntity.ok(accountDetails.toAccountDetailsDto());
     }
 
     public ResponseEntity<AccountDetailsDto> updateAccountDetails(String token, AccountDetailsDto accountDetailsDto) {
-
         Account account = utils.validateTokenAndGetOwner(token);
-
         accountDetailsService.deleteById(account.getAccountId());
-        return ResponseEntity.ok(accountDetailsService.save(accountDetailsDto.toAccountDetails()).toAccountDetailsDto());
+        AccountDetails accountDetails = accountDetailsService.save(accountDetailsDto.toAccountDetails());
+        log.info("AccountDetails updated with Id: " + account.getAccountId());
+        return ResponseEntity.ok(accountDetails.toAccountDetailsDto());
     }
 
 
@@ -140,15 +160,15 @@ public class AccountFacade {
         Account account = utils.validateTokenAndGetOwner(token);
         List<AccountShortDto> accountShortDtoList = accountShortService.getAccountsByIds(
                 subService.getAccountSubbedBy(account.getAccountId()));
-
+        log.info("Found " + accountShortDtoList.size() +" subscriptions for account with Id: " + account.getAccountId());
         return ResponseEntity.ok(accountShortDtoList);
     }
 
     public HttpStatus subscribe(String token, UUID accountId) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-
         subService.byAccountSubToAccount(account.getAccountId(), accountId);
+        log.info("Account " + account.getAccountId() + " is now subbed to " + accountId);
 
         return HttpStatus.OK;
     }
@@ -156,8 +176,8 @@ public class AccountFacade {
     public HttpStatus unsubscribe(String token, UUID accountId) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-
         subService.byAccountUnsubAccount(account.getAccountId(), accountId);
+        log.info("Account " + account.getAccountId() + " is now not subbed to " + accountId);
 
         return HttpStatus.OK;
     }
@@ -170,6 +190,7 @@ public class AccountFacade {
         List<ArticleShortDto> accountShortDtoList = articleService.getByAccountId(account.getAccountId()).
                 stream().map(Article::toArticleShortDto)
                 .collect(Collectors.toList());
+        log.info("Found " + accountShortDtoList.size() + " likes for account with Id: " + account.getAccountId());
 
         return ResponseEntity.ok(accountShortDtoList);
     }
@@ -177,8 +198,8 @@ public class AccountFacade {
     public HttpStatus like(String token, UUID articleId) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-
         likeService.byAccountLikePost(account.getAccountId(), articleId);
+        log.info("Account " + account.getAccountId() + " has liked " + articleId);
 
         return HttpStatus.OK;
     }
@@ -186,8 +207,8 @@ public class AccountFacade {
     public HttpStatus unlike(String token, UUID articleId) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-
         likeService.byAccountUnlikeAccount(account.getAccountId(), articleId);
+        log.info("Account " + account.getAccountId() + " has disliked " + articleId);
 
         return HttpStatus.OK;
     }
@@ -200,6 +221,7 @@ public class AccountFacade {
         Account account = utils.validateTokenAndGetOwner(token);
         List<AccountShortDto> accountShortDtoList = accountShortService.getAccountsByIds(
                 likeService.getAccountData(account.getAccountId()));
+        log.info("Found " + accountShortDtoList.size() + " blacklist records for account with Id: " + account.getAccountId());
 
 
         return ResponseEntity.ok(accountShortDtoList);
@@ -208,8 +230,8 @@ public class AccountFacade {
     public HttpStatus addToBlackList(String token, UUID accountId) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-
         blackListService.byAccountBlockAccount(account.getAccountId(), accountId);
+        log.info("Account " + account.getAccountId() + " has added " + accountId + " to their blacklist");
 
         return HttpStatus.OK;
     }
@@ -217,8 +239,8 @@ public class AccountFacade {
     public HttpStatus removeFromBlackList(String token, UUID accountId) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-
         blackListService.byAccountUnblockAccount(account.getAccountId(), accountId);
+        log.info("Account " + account.getAccountId() + " has removed " + accountId + " from their blacklist");
 
         return HttpStatus.OK;
     }

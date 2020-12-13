@@ -8,30 +8,21 @@ import java.util.Date;
 import java.util.UUID;
 
 @Data
-public class ArticleDto {
-
-    UUID id;
-
-    String imageUrl;
-
-    UUID authorId;
+public class ArticleSaveDto {
 
     String title;
 
-    Date date;
+    String imageUrl;
 
     Category category;
 
     byte[] data;
 
-
     public Article toArticle() {
         Article article = new Article();
 
-        article.setArticleId(id);
-        article.setAuthorId(authorId);
         article.setTitle(title);
-        article.setDate(date);
+        article.setImageUrl(imageUrl);
         article.setCategory(category);
         article.setData(data);
 

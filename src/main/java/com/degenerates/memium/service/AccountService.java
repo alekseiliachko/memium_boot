@@ -1,5 +1,6 @@
 package com.degenerates.memium.service;
 
+import com.degenerates.memium.exceptions.EntityNotFoundException;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,18 +22,11 @@ public class AccountService {
     }
 
     public Account save(Account account) {
-        Account accountSaved = accountRepository.save(account);
-        log.info("Saved accound: " + account.getAccountId());
-        return accountSaved;
+        return accountRepository.save(account);
     }
 
     public Account getById(UUID id) {
-        Account account = accountRepository.findById(id).orElse(null);
-        if (account != null)
-            log.info("Found account with id: " + id);
-        else
-            log.info("No account with id: " + id);
-        return account;
+        return accountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     };
 
     public List<Account> getByIds(List<UUID> ids) {
@@ -44,17 +38,10 @@ public class AccountService {
     }
 
     public Account getByUsername(String username) {
-        Account account = accountRepository.findByUsername(username);
-        if (account != null)
-            log.info("Found account with username: " + username);
-        else
-            log.info("No account with username: " + username);
-        return account;
+        return accountRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
     }
 
     public void deleteById(UUID id) {
         accountRepository.deleteById(id);
-
-        log.info("Deleted account with id: " + id);
     }
 }

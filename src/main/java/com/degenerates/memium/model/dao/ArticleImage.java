@@ -1,21 +1,21 @@
 package com.degenerates.memium.model.dao;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
-
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Image {
+public class ArticleImage {
 
     @NonNull
-    UUID accountId;
+    UUID articleId;
 
     @NonNull
     byte [] image;
 }
+

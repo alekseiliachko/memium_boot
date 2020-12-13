@@ -2,7 +2,7 @@ package com.degenerates.memium.service;
 
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.AccountDetails;
-import com.degenerates.memium.model.dao.Image;
+import com.degenerates.memium.model.dao.AccountImage;
 import com.degenerates.memium.model.dto.AccountShortDto;
 import com.degenerates.memium.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ public class AccountShortService {
     AccountDetailsService accountDetailsService;
 
     @Autowired
-    ImageService imageService;
+    AccountImageService accountImageService;
 
     public AccountShortDto getAccountById(UUID accountId) {
         Account account = accountService.getById(accountId);
         AccountDetails accountDetails = accountDetailsService.getByAccountId(accountId);
-        Image image = imageService.getByAccountId(accountId);
+        AccountImage accountImage = accountImageService.getByAccountId(accountId);
 
-        return Utils.toAccountShortDto(account, accountDetails, image);
+        return Utils.toAccountShortDto(account, accountDetails, accountImage);
     }
 
     public List<AccountShortDto> getAccountsByIds(List<UUID> list) {
@@ -37,8 +37,8 @@ public class AccountShortService {
         for (int i = 0; i < list.size(); i++) {
             Account account = accountService.getById(list.get(i));
             AccountDetails accountDetails = accountDetailsService.getByAccountId(list.get(i));
-            Image image = imageService.getByAccountId(list.get(i));
-            accountShortDtoList.add(Utils.toAccountShortDto(account, accountDetails, image));
+            AccountImage accountImage = accountImageService.getByAccountId(list.get(i));
+            accountShortDtoList.add(Utils.toAccountShortDto(account, accountDetails, accountImage));
         }
         return accountShortDtoList;
     }

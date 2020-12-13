@@ -30,6 +30,9 @@ public class StartupApplicationListener implements
     AuthFacade authFacade;
 
     @Autowired
+    ArticleFacade articleFacade;
+
+    @Autowired
     AccountService accountService;
 
     @Autowired
@@ -133,7 +136,7 @@ public class StartupApplicationListener implements
         article1.setCategory(Category.Biology);
         article1.setTitle("Are memes genetic weapon of mass destruction?");
         article1.setDate(new Date());
-        article1.setData("yes, and Jews are responsible.");
+        article1.setData("yes, and Jews are responsible.".getBytes());
 
         article1 = articleService.save(article1);
 
@@ -156,7 +159,7 @@ public class StartupApplicationListener implements
         article2.setCategory(Category.Biology);
         article2.setTitle("Alt-right monkeys");
         article2.setDate(new Date());
-        article2.setData("yes, and Jews are the best!");
+        article2.setData("yes, and Jews are the best!".getBytes());
 
         article2 = articleService.save(article2);
 

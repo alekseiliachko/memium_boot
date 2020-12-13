@@ -32,6 +32,7 @@ public class SpringFoxConfig {
     @Bean
     public Docket customImplementation() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .useDefaultResponseMessages(false)
                 .select()
                 .apis( RequestHandlerSelectors.basePackage("com.degenerates.memium") )
                 .paths(PathSelectors.any())

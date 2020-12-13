@@ -16,8 +16,6 @@ public class AccountDto {
 
     Date created;
 
-    UUID accountDetailsId;
-
     public Account toAccount() {
         Account account = new Account();
 

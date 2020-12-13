@@ -10,6 +10,8 @@ import java.util.UUID;
 public class ArticleShortDto {
     UUID id;
 
+    String imageUrl;
+
     UUID authorId;
 
     String title;

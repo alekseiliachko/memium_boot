@@ -4,13 +4,13 @@ import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.AccountDetails;
 import com.degenerates.memium.model.dto.LogInForm;
 import com.degenerates.memium.model.dto.LogInSuccess;
-import com.degenerates.memium.model.dto.MeRequest;
 import com.degenerates.memium.model.dto.SignupForm;
 import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.security.services.SecurityUserDetails;
 import com.degenerates.memium.service.AccountDetailsService;
 import com.degenerates.memium.service.AccountService;
 import com.degenerates.memium.service.RoleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class AuthFacade {
 
@@ -59,6 +60,8 @@ public class AuthFacade {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        log.info("Account logged In with username: " + userDetails.getUsername());
+
         return ResponseEntity.ok(new LogInSuccess(jwt, userDetails.getUsername()));
     }
 
@@ -89,12 +92,8 @@ public class AuthFacade {
         accountDetails.setBio(signUpRequest.getBio());
         accountDetailsService.save(accountDetails);
 
+        log.info("Account created with username: " + savedAccount.getUsername());
+
         return HttpStatus.CREATED;
     }
-
-    public ResponseEntity<?> getUsernameByToken(MeRequest tokenRequest) {
-        String username = jwtUtils.getUserNameFromJwtToken(tokenRequest.getToken());
-        Account account = accountService.getByUsername(username);
-        return ResponseEntity.ok(account.getAccountId());
-    };
 }

@@ -18,6 +18,8 @@ public class Article {
     @NonNull
     UUID articleId;
 
+    String imageUrl;
+
     @NonNull
     UUID authorId;
 
@@ -31,7 +33,7 @@ public class Article {
     Category category;
 
     @NonNull
-    String data;
+    byte[] data;
 
     public ArticleDto toArticleDto() {
         ArticleDto articleDto = new ArticleDto();

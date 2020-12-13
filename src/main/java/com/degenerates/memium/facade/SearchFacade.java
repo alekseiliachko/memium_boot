@@ -5,10 +5,10 @@ import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dto.AccountShortDto;
 import com.degenerates.memium.model.dto.ArticleShortDto;
 import com.degenerates.memium.model.dto.QueryDto;
-import com.degenerates.memium.repository.AccountRepository;
 import com.degenerates.memium.service.AccountService;
 import com.degenerates.memium.service.AccountShortService;
 import com.degenerates.memium.service.ArticleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class SearchFacade {
 
@@ -35,6 +36,8 @@ public class SearchFacade {
                 .stream().map(Article::toArticleShortDto)
                 .collect(Collectors.toList());
 
+        log.info("Found " + articleShortDtoListCategory.size() + " articles for category-search: " + string);
+
         queryDto.setArticles(articleShortDtoListCategory);
 
         return ResponseEntity.ok(queryDto);
@@ -46,6 +49,8 @@ public class SearchFacade {
         List<ArticleShortDto> articleShortDtoListCategory = articleService.getByTitleR(string)
                 .stream().map(Article::toArticleShortDto)
                 .collect(Collectors.toList());
+
+        log.info("Found " + articleShortDtoListCategory.size() + " articles for article-search: " + string);
 
         queryDto.setArticles(articleShortDtoListCategory);
 
@@ -60,6 +65,9 @@ public class SearchFacade {
                         .stream().map(Account::getAccountId)
                         .collect(Collectors.toList()));
 
+        log.info("Found " + accountShortDtoList.size() + " accounts for account-search: " + string);
+
+
         queryDto.setAccounts(accountShortDtoList);
 
         return ResponseEntity.ok(queryDto);
@@ -72,13 +80,21 @@ public class SearchFacade {
                         .stream().map(Account::getAccountId)
                         .collect(Collectors.toList()));
 
+        log.info("Found " + accountShortDtoList.size() + " accounts for all-search: " + string);
+
+
         List<ArticleShortDto> articleShortDtoList = articleService.getByTitleR(string)
                 .stream().map(Article::toArticleShortDto)
                 .collect(Collectors.toList());
 
+        log.info("Found " + articleShortDtoList.size() + " articles by title for all-search: " + string);
+
+
         List<ArticleShortDto> articleShortDtoListCategory = articleService.getByCategoryR(string)
                 .stream().map(Article::toArticleShortDto)
                 .collect(Collectors.toList());
+
+        log.info("Found " + articleShortDtoListCategory.size() + " articles by category for all-search: " + string);
 
         articleShortDtoList.addAll(articleShortDtoListCategory);
 
