@@ -11,7 +11,9 @@ import java.util.UUID;
 public interface ArticleRepository extends MongoRepository<Article, UUID> {
     List<Article> findByAuthorId(UUID authorId);
 
-    List<Article> findByAuthorIdOrderByDate(List<UUID> authorIds);
+    List<Article> findByAuthorIdIn(List<UUID> authorIds);
+
+    List<Article> findByArticleIdInOrderByDate(List<UUID> articleIds);
 
     List<Article> findByTitleRegexOrderByDate(String title);
 

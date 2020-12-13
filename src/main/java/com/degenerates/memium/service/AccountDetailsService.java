@@ -24,12 +24,12 @@ public class AccountDetailsService {
     }
 
     public AccountDetails getByAccountId(UUID id) {
-        AccountDetails accountDetails = accountDetailsRepository.findByAccountId(id).orElseThrow(EntityNotFoundException::new);
+        AccountDetails accountDetails = accountDetailsRepository.findByAccountIdIn(id).orElseThrow(EntityNotFoundException::new);
         return accountDetails;
     };
 
     public List<AccountDetails> getByAccountIds(List<UUID> accountIds) {
-        return accountDetailsRepository.findByAccountId(accountIds);
+        return accountDetailsRepository.findByAccountIdIn(accountIds);
     }
 
     public void deleteById(UUID id) {

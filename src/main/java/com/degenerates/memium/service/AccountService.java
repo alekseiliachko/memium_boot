@@ -30,7 +30,7 @@ public class AccountService {
     };
 
     public List<Account> getByIds(List<UUID> ids) {
-        return accountRepository.findByAccountId(ids);
+        return accountRepository.findByAccountIdIn(ids);
     }
 
     public Boolean checkIfExists(String username) {

@@ -37,7 +37,7 @@ public class AccountShortService {
         for (int i = 0; i < list.size(); i++) {
             Account account = accountService.getById(list.get(i));
             AccountDetails accountDetails = accountDetailsService.getByAccountId(list.get(i));
-            AccountImage accountImage = accountImageService.getByAccountId(list.get(i));
+            AccountImage accountImage = accountImageService.getByAccountIdSAFE(list.get(i));
             accountShortDtoList.add(Utils.toAccountShortDto(account, accountDetails, accountImage));
         }
         return accountShortDtoList;

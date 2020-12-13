@@ -27,6 +27,10 @@ public class AccountImageService {
         return accountImageRepository.findByAccountId(accountId).orElseThrow(OptionalEntityNotFoundException::new);
     }
 
+    public AccountImage getByAccountIdSAFE(UUID accountId) {
+        return accountImageRepository.findByAccountId(accountId).orElse(new AccountImage());
+    }
+
     public void deleteByAccountId(UUID accountId) {
         accountImageRepository.deleteByAccountId(accountId);
     }

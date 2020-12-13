@@ -3,6 +3,7 @@ package com.degenerates.memium.service;
 import com.degenerates.memium.exceptions.EntityNotFoundException;
 import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.repository.ArticleRepository;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,11 @@ public class ArticleService {
     }
 
     public List<Article> getLatestByAuthorIds(List<UUID> authorIds) {
-        return articleRepository.findByAuthorIdOrderByDate(authorIds);
+        return articleRepository.findByAuthorIdIn(authorIds);
+    }
+
+    public List<Article> getByArticleIds(List<UUID> articleIds) {
+        return articleRepository.findByArticleIdInOrderByDate(articleIds);
     }
 
     public Article getById(UUID articleId) {

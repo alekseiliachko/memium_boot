@@ -172,8 +172,8 @@ public class AccountController {
             @ApiResponse(code = 405, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
-    @PostMapping("/sub")
-    public HttpStatus subscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
+    @PostMapping("/sub/{accountId}")
+    public HttpStatus subscribe(@RequestHeader HttpHeaders headers,@PathVariable UUID accountId) {
         return accountFacade.subscribe(utils.extractToken(headers), accountId);
     }
 
@@ -187,8 +187,8 @@ public class AccountController {
             @ApiResponse(code = 405, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
-    @DeleteMapping("/sub")
-    public HttpStatus unSubscribe(@RequestHeader HttpHeaders headers, UUID accountId) {
+    @DeleteMapping("/sub/{accountId}")
+    public HttpStatus unSubscribe(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
         return accountFacade.unsubscribe(utils.extractToken(headers), accountId);
     }
 
@@ -221,8 +221,8 @@ public class AccountController {
             @ApiResponse(code = 405, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
-    @PostMapping("/like")
-    public HttpStatus like(@RequestHeader HttpHeaders headers, UUID articleId) {
+    @PostMapping("/like/{articleId}")
+    public HttpStatus like(@RequestHeader HttpHeaders headers,@PathVariable UUID articleId) {
         return accountFacade.like(utils.extractToken(headers), articleId);
     }
 
@@ -236,8 +236,8 @@ public class AccountController {
             @ApiResponse(code = 405, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
-    @DeleteMapping("/like")
-    public HttpStatus unLike(@RequestHeader HttpHeaders headers, UUID articleId) {
+    @DeleteMapping("/like/{articleId}")
+    public HttpStatus unLike(@RequestHeader HttpHeaders headers, @PathVariable UUID articleId) {
         return accountFacade.unlike(utils.extractToken(headers), articleId);
     }
 
@@ -271,8 +271,8 @@ public class AccountController {
             @ApiResponse(code = 405, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
-    @PostMapping("/bl")
-    public HttpStatus addBL(@RequestHeader HttpHeaders headers, UUID accountId) {
+    @PostMapping("/bl/{accountId}")
+    public HttpStatus addBL(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
         return accountFacade.addToBlackList(utils.extractToken(headers), accountId);
     }
     @ApiOperation(value = "Remove from blacklist accountId provided by current token in Headers ")
@@ -285,8 +285,8 @@ public class AccountController {
             @ApiResponse(code = 405, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
-    @DeleteMapping("/bl")
-    public HttpStatus removeBL(@RequestHeader HttpHeaders headers, UUID accountId) {
+    @DeleteMapping("/bl/{accountId}")
+    public HttpStatus removeBL(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
         return accountFacade.removeFromBlackList(utils.extractToken(headers), accountId);
     }
 }

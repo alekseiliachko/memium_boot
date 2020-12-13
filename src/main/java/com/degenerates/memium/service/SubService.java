@@ -24,7 +24,7 @@ public class SubService {
     };
 
     public void byAccountSubToAccount(UUID accountId, UUID subId) {
-        SubList subList = new SubList(accountId, subId);
+        SubList subList = new SubList(UUID.randomUUID(), accountId, subId);
         if (!repository.existsByAccountIdAndSubId(accountId, subId))
             repository.save(subList);
     }

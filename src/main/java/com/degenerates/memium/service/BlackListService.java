@@ -22,7 +22,7 @@ public class BlackListService {
     };
 
     public void byAccountBlockAccount(UUID accountId, UUID blockId) {
-        BlackList blackList = new BlackList(accountId, blockId);
+        BlackList blackList = new BlackList(UUID.randomUUID(), accountId, blockId);
         if (!repository.existsByAccountIdAndBlockedId(accountId, blockId))
             repository.save(blackList);
     }

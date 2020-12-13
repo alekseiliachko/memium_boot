@@ -187,12 +187,14 @@ public class AccountFacade {
     public ResponseEntity<List<ArticleShortDto>> getLikes(String token) {
 
         Account account = utils.validateTokenAndGetOwner(token);
-        List<ArticleShortDto> accountShortDtoList = articleService.getByAccountId(account.getAccountId()).
-                stream().map(Article::toArticleShortDto)
-                .collect(Collectors.toList());
-        log.info("Found " + accountShortDtoList.size() + " likes for account with Id: " + account.getAccountId());
 
-        return ResponseEntity.ok(accountShortDtoList);
+        List<ArticleShortDto> articleShortDtoList = articleService.getByArticleIds(
+                likeService.getAccountData(account.getAccountId()))
+                .stream().map(Article::toArticleShortDto)
+                .collect(Collectors.toList());
+        log.info("Found " + articleShortDtoList.size() + " likes for account with Id: " + account.getAccountId());
+
+        return ResponseEntity.ok(articleShortDtoList);
     }
 
     public HttpStatus like(String token, UUID articleId) {
@@ -220,7 +222,7 @@ public class AccountFacade {
 
         Account account = utils.validateTokenAndGetOwner(token);
         List<AccountShortDto> accountShortDtoList = accountShortService.getAccountsByIds(
-                likeService.getAccountData(account.getAccountId()));
+                blackListService.getAccountData(account.getAccountId()));
         log.info("Found " + accountShortDtoList.size() + " blacklist records for account with Id: " + account.getAccountId());
 
 

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface AccountDetailsRepository extends MongoRepository<AccountDetails, UUID> {
 
-    Optional<AccountDetails> findByAccountId(UUID id);
+    Optional<AccountDetails> findByAccountIdIn(UUID id);
 
-    List<AccountDetails> findByAccountId(List<UUID> accountIds);
+    List<AccountDetails> findByAccountIdIn(List<UUID> accountIds);
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ArticleImage {
 
+    @Id
     @NonNull
     UUID articleId;
 

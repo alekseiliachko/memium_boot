@@ -8,5 +8,6 @@ public enum Category {
     Chemistry,
     Astro,
     Space,
-    Other
+    Other,
+    Anime
 }

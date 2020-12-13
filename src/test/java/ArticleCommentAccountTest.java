@@ -73,9 +73,9 @@ public class ArticleCommentAccountTest {
         comments.add(comment1);
         comments.add(comment2);
 
-        LikeList likeList1 = new LikeList(UUID.randomUUID(), articleId);
-        LikeList likeList2 = new LikeList(UUID.randomUUID(), articleId);
-        LikeList likeList3 = new LikeList(UUID.randomUUID(), UUID.randomUUID());
+        LikeList likeList1 = new LikeList(UUID.randomUUID(), UUID.randomUUID(), articleId);
+        LikeList likeList2 = new LikeList(UUID.randomUUID(), UUID.randomUUID(), articleId);
+        LikeList likeList3 = new LikeList(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
 
         likeLists.add(likeList1);
         likeLists.add(likeList2);
