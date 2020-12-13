@@ -47,7 +47,7 @@ public class ArticleController {
         return articleFacade.getMyArticles(utils.extractToken(headers));
     }
 
-    @ApiOperation(value = "Get Short Articles by token provided in Headers ", response = Iterable.class, produces = "application/json")
+    @ApiOperation(value = "Check if token in Headers liked article provided ", response = Boolean.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 204, message = "No Content fo show"),
@@ -58,8 +58,8 @@ public class ArticleController {
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
     @GetMapping("/haslike/{articleId}")
-    public ResponseEntity<List<ArticleShortDto>> getMyArticles(@RequestHeader HttpHeaders headers, @PathVariable UUID articleId) {
-        return articleFacade.getMyArticles(utils.extractToken(headers));
+    public ResponseEntity<Boolean> getMyArticles(@RequestHeader HttpHeaders headers, @PathVariable UUID articleId) {
+        return articleFacade.checkIfAccountLikedArticle(articleId, utils.extractToken(headers));
     }
 
 
@@ -78,7 +78,7 @@ public class ArticleController {
         return articleFacade.createArticle(articleSaveDto, utils.extractToken(headers));
     }
 
-    @ApiOperation(value = "Set Image for articleId and get it's ID", response = byte[].class, produces = "application/octet-stream")
+    @ApiOperation(value = "Set Image for articleId and get it's ID", response = UUID.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 204, message = "No Content fo show"),

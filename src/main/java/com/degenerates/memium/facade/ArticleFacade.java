@@ -148,7 +148,7 @@ public class ArticleFacade {
         
     }
 
-    public ResponseEntity<Boolean> getArticlesForAccountId(UUID articleId, String token) {
+    public ResponseEntity<Boolean> checkIfAccountLikedArticle(UUID articleId, String token) {
         Account account = utils.validateTokenAndGetOwner(token);
         Boolean flag = likeService.checkIfAccountLikedArticle(account.getAccountId(), articleId);
         log.info("Account " + account.getUsername() +" like on " + articleId + " is: " + flag.toString());
