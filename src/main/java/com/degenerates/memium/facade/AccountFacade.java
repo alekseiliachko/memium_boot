@@ -147,8 +147,11 @@ public class AccountFacade {
 
     public ResponseEntity<AccountDetailsDto> updateAccountDetails(String token, AccountDetailsDto accountDetailsDto) {
         Account account = utils.validateTokenAndGetOwner(token);
-        accountDetailsService.deleteById(account.getAccountId());
-        AccountDetails accountDetails = accountDetailsService.save(accountDetailsDto.toAccountDetails());
+        
+        AccountDetails accountDetails = accountDetailsDto.toAccountDetails();
+        accountDetails.setAccountId(account.getAccountId());
+        accountDetails = accountDetailsService.save(accountDetails);
+
         log.info("AccountDetails updated with Id: " + account.getAccountId());
         return ResponseEntity.ok(accountDetails.toAccountDetailsDto());
     }

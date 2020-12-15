@@ -20,6 +20,7 @@ public class AccountDetailsService {
 
     public AccountDetails save(AccountDetails accountDetails) {
         AccountDetails accountDetailsSaved = accountDetailsRepository.save(accountDetails);
+        System.out.println(accountDetailsSaved);
         return accountDetails;
     }
 
