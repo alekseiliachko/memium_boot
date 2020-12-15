@@ -31,7 +31,7 @@ public class AccountDetails {
         accountDetailsDto.setAccountId(getAccountId());
         accountDetailsDto.setName(getName());
         accountDetailsDto.setBio(getBio());
-        accountDetailsDto.setGender(getBio());
+        accountDetailsDto.setGender(getGender());
         accountDetailsDto.setDob(getDob());
 
         return accountDetailsDto;
