@@ -29,10 +29,10 @@ public class AccountDetails {
         AccountDetailsDto accountDetailsDto = new AccountDetailsDto();
 
         accountDetailsDto.setAccountId(getAccountId());
-        accountDetailsDto.setName(accountDetailsDto.getName());
-        accountDetailsDto.setBio(accountDetailsDto.getBio());
-        accountDetailsDto.setGender(accountDetailsDto.getBio());
-        accountDetailsDto.setDob(accountDetailsDto.getDob());
+        accountDetailsDto.setName(getName());
+        accountDetailsDto.setBio(getBio());
+        accountDetailsDto.setGender(getBio());
+        accountDetailsDto.setDob(getDob());
 
         return accountDetailsDto;
     }
