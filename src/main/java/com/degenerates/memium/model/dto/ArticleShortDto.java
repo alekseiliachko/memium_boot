@@ -16,6 +16,8 @@ public class ArticleShortDto {
 
     String title;
 
+    String description;
+
     Date date;
 
     Category category;

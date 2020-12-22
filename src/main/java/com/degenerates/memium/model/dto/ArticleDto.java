@@ -14,6 +14,8 @@ public class ArticleDto {
 
     String imageUrl;
 
+    String description;
+
     UUID authorId;
 
     String title;
@@ -31,6 +33,7 @@ public class ArticleDto {
         article.setArticleId(id);
         article.setAuthorId(authorId);
         article.setTitle(title);
+        article.setDescription(description);
         article.setDate(date);
         article.setCategory(category);
         article.setData(data);

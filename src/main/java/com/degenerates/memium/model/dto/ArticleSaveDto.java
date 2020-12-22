@@ -12,6 +12,8 @@ public class ArticleSaveDto {
 
     String title;
 
+    String description;
+
     String imageUrl;
 
     Category category;
@@ -22,6 +24,7 @@ public class ArticleSaveDto {
         Article article = new Article();
 
         article.setTitle(title);
+        article.setDescription(description);
         article.setImageUrl(imageUrl);
         article.setCategory(category);
         article.setData(data);

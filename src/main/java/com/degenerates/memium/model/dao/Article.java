@@ -21,6 +21,9 @@ public class Article {
     String imageUrl;
 
     @NonNull
+    String description;
+
+    @NonNull
     UUID authorId;
 
     @NonNull
@@ -42,6 +45,7 @@ public class Article {
         articleDto.setTitle(title);
         articleDto.setAuthorId(authorId);
         articleDto.setCategory(category);
+        articleDto.setDescription(description);
         articleDto.setDate(date);
         articleDto.setData(data);
 
@@ -55,6 +59,7 @@ public class Article {
         articleDto.setTitle(title);
         articleDto.setAuthorId(authorId);
         articleDto.setCategory(category);
+        articleDto.setDescription(description);
         articleDto.setDate(date);
 
         return articleDto;
