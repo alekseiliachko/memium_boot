@@ -38,7 +38,7 @@ public class ArticleOpenController {
         return articleFacade.getArticlesForAccountId(accountId);
     }
 
-    @ApiOperation(value = "Get Article Image by AccountId ", response = byte[].class, produces = "application/application/octet-stream")
+    @ApiOperation(value = "Get Article Image by ArticleId ", response = byte[].class, produces = "application/application/octet-stream")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 204, message = "No Content fo show"),
@@ -48,8 +48,8 @@ public class ArticleOpenController {
             @ApiResponse(code = 403, message = "Not allowed to do so"),
             @ApiResponse(code = 415, message = "Bad Media File provided"),
     })
-    @PostMapping("/image/{articleId}")
-    public byte[] getArticleImageByArticleId(@RequestHeader HttpHeaders headers, @RequestParam("image") MultipartFile image, @PathVariable UUID articleId) {
+    @GetMapping("/image/{articleId}")
+    public byte[] getArticleImageByArticleId(@RequestHeader HttpHeaders headers, @PathVariable UUID articleId) {
         return articleFacade.getArticleImage(articleId);
     }
 
