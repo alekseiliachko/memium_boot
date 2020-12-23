@@ -135,7 +135,7 @@ public class Populators {
         article1.setCategory(Category.Biology);
         article1.setTitle("Are memes genetic weapon of mass destruction?");
         article1.setDate(new Date());
-        article1.setData("yes, and Jews are responsible.".getBytes());
+        article1.setData("yes, and Jews are responsible.");
 
         article1 = articleService.save(article1);
 
@@ -158,7 +158,7 @@ public class Populators {
         article2.setCategory(Category.Biology);
         article2.setTitle("Alt-right monkeys");
         article2.setDate(new Date());
-        article2.setData("yes, and Jews are the best!".getBytes());
+        article2.setData("yes, and Jews are the best!");
 
         article2 = articleService.save(article2);
 
@@ -213,7 +213,7 @@ public class Populators {
         article1.setCategory(Category.Anime);
         article1.setTitle("Русские мемчанские");
         article1.setDate(new Date());
-        article1.setData("yes, and Jews are responsible.".getBytes());
+        article1.setData("yes, and Jews are responsible.");
 
         Article article2 = new Article();
         article2.setArticleId(UUID.randomUUID());
@@ -221,7 +221,7 @@ public class Populators {
         article2.setCategory(Category.Biology);
         article2.setTitle("Bio?");
         article2.setDate(new Date());
-        article2.setData("yes, and Jews are responsible.".getBytes());
+        article2.setData("yes, and Jews are responsible.");
 
         Article article3 = new Article();
         article3.setArticleId(UUID.randomUUID());
@@ -229,7 +229,7 @@ public class Populators {
         article3.setCategory(Category.Chemistry);
         article3.setTitle("Chem?");
         article3.setDate(new Date());
-        article3.setData("yes, and Jews are responsible.".getBytes());
+        article3.setData("yes, and Jews are responsible.");
 
         Article article4 = new Article();
         article4.setArticleId(UUID.randomUUID());
@@ -237,7 +237,7 @@ public class Populators {
         article4.setCategory(Category.IT);
         article4.setTitle("It?");
         article4.setDate(new Date());
-        article4.setData("yes, and Jews are responsible.".getBytes());
+        article4.setData("yes, and Jews are responsible.");
 
         article1 = articleService.save(article1);
         article2 = articleService.save(article2);

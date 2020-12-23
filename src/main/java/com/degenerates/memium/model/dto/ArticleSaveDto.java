@@ -18,7 +18,7 @@ public class ArticleSaveDto {
 
     Category category;
 
-    byte[] data;
+    String data;
 
     public Article toArticle() {
         Article article = new Article();

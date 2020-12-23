@@ -36,7 +36,7 @@ public class Article {
     Category category;
 
     @NonNull
-    byte[] data;
+    String data;
 
     public ArticleDto toArticleDto() {
         ArticleDto articleDto = new ArticleDto();

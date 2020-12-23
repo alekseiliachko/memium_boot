@@ -24,7 +24,7 @@ public class ArticleDto {
 
     Category category;
 
-    byte[] data;
+    String data;
 
 
     public Article toArticle() {
