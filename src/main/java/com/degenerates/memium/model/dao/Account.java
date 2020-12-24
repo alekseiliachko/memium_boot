@@ -38,7 +38,7 @@ public class Account {
     @NonNull
     Date created;
 
-    public AccountDto toAccountDto() {
+    public AccountDto convertToAccountDto() {
         AccountDto accountDto = new AccountDto();
 
         accountDto.setId(getAccountId());

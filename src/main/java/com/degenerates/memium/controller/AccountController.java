@@ -1,7 +1,6 @@
 package com.degenerates.memium.controller;
 
 import com.degenerates.memium.facade.AccountFacade;
-
 import com.degenerates.memium.model.dto.*;
 import com.degenerates.memium.util.Utils;
 import io.swagger.annotations.ApiOperation;
@@ -31,12 +30,12 @@ public class AccountController {
     @ApiOperation(value = "Get Avatar based on current token in Headers ", response = byte[].class, produces = "application/octet-stream")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @GetMapping("/avatar")
     public byte[] getAvatar(@RequestHeader HttpHeaders headers) {
@@ -46,12 +45,12 @@ public class AccountController {
     @ApiOperation(value = "Set Avatar based on current token in Headers ", response = byte[].class, produces = "application/octet-stream")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PostMapping("/avatar")
     public byte[] setAvatar(@RequestHeader HttpHeaders headers, @RequestParam("image") MultipartFile image) {
@@ -61,12 +60,12 @@ public class AccountController {
     @ApiOperation(value = "Delete Avatar based on current token in Headers ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @DeleteMapping("/avatar")
     public HttpStatus deleteCurrentAvatar(@RequestHeader HttpHeaders headers) {
@@ -81,12 +80,12 @@ public class AccountController {
     @ApiOperation(value = "Get Account based on current token in Headers ", response = AccountDto.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @GetMapping
     public ResponseEntity<AccountDto> getAccount(@RequestHeader HttpHeaders headers) {
@@ -101,12 +100,12 @@ public class AccountController {
     @ApiOperation(value = "Get AccountDetails based on current token in Headers ", response = AccountDetailsDto.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @GetMapping("/details")
     public ResponseEntity<AccountDetailsDto> getDetails(@RequestHeader HttpHeaders headers) {
@@ -116,12 +115,12 @@ public class AccountController {
     @ApiOperation(value = "Update AccountDetails based on current token in Headers ", response = AccountDetailsDto.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PutMapping("/details")
     public ResponseEntity<AccountDetailsDto> updateDetails(@RequestHeader HttpHeaders headers, @RequestBody AccountDetailsDto accountDetailsDto) {
@@ -131,12 +130,12 @@ public class AccountController {
     @ApiOperation(value = "Update Account Email based on current token in Headers ", response = AccountDto.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PutMapping("/email")
     public ResponseEntity<AccountDto> updateAccount(@RequestHeader HttpHeaders headers, UpdatePasswordEmailDto updatePasswordEmailDto) {
@@ -150,12 +149,12 @@ public class AccountController {
     @ApiOperation(value = "Get subs as Short Accounts based on current token in Headers ", response = Iterable.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @GetMapping("/sub")
     public ResponseEntity<List<AccountShortDto>> getSub(@RequestHeader HttpHeaders headers) {
@@ -165,12 +164,12 @@ public class AccountController {
     @ApiOperation(value = "Sub to accountId provided by current token in Headers ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PostMapping("/sub/{accountId}")
     public HttpStatus subscribe(@RequestHeader HttpHeaders headers,@PathVariable UUID accountId) {
@@ -180,12 +179,12 @@ public class AccountController {
     @ApiOperation(value = "UnSub from accountId provided by current token in Headers ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @DeleteMapping("/sub/{accountId}")
     public HttpStatus unSubscribe(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
@@ -199,42 +198,42 @@ public class AccountController {
     @ApiOperation(value = "Get likes as Short Articles based on current token in Headers ", response = Iterable.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @GetMapping("/like")
     public ResponseEntity<List<ArticleShortDto>> getLikes(@RequestHeader HttpHeaders headers) {
         return accountFacade.getLikes(utils.extractToken(headers));
     }
 
-    @ApiOperation(value = "Like articleId provided by current token in Headers ")
+    @ApiOperation(value = "Like article provided by current token in Headers ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PostMapping("/like/{articleId}")
     public HttpStatus like(@RequestHeader HttpHeaders headers,@PathVariable UUID articleId) {
         return accountFacade.like(utils.extractToken(headers), articleId);
     }
 
-    @ApiOperation(value = "UnLike articleId provided by current token in Headers ")
+    @ApiOperation(value = "UnLike article provided by current token in Headers ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @DeleteMapping("/like/{articleId}")
     public HttpStatus unLike(@RequestHeader HttpHeaders headers, @PathVariable UUID articleId) {
@@ -250,43 +249,45 @@ public class AccountController {
     @ApiOperation(value = "Get blacklist as Short Accounts based on current token in Headers ", response = Iterable.class, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @GetMapping("/bl")
     public ResponseEntity<List<AccountShortDto>> getBL(@RequestHeader HttpHeaders headers) {
         return accountFacade.getBlackList(utils.extractToken(headers));
     }
+
     @ApiOperation(value = "Blacklist accountId provided by current token in Headers ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PostMapping("/bl/{accountId}")
-    public HttpStatus addBL(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
+    public HttpStatus addToBL(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
         return accountFacade.addToBlackList(utils.extractToken(headers), accountId);
     }
+
     @ApiOperation(value = "Remove from blacklist accountId provided by current token in Headers ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @DeleteMapping("/bl/{accountId}")
-    public HttpStatus removeBL(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
+    public HttpStatus removeFromBL(@RequestHeader HttpHeaders headers, @PathVariable UUID accountId) {
         return accountFacade.removeFromBlackList(utils.extractToken(headers), accountId);
     }
 }

@@ -29,11 +29,4 @@ public class AccountDetailsService {
         return accountDetails;
     };
 
-    public List<AccountDetails> getByAccountIds(List<UUID> accountIds) {
-        return accountDetailsRepository.findByAccountIdIn(accountIds);
-    }
-
-    public void deleteById(UUID id) {
-        accountDetailsRepository.deleteById(id);
-    }
 }

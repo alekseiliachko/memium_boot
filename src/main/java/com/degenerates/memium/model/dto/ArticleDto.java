@@ -26,18 +26,4 @@ public class ArticleDto {
 
     String data;
 
-
-    public Article toArticle() {
-        Article article = new Article();
-
-        article.setArticleId(id);
-        article.setAuthorId(authorId);
-        article.setTitle(title);
-        article.setDescription(description);
-        article.setDate(date);
-        article.setCategory(category);
-        article.setData(data);
-
-        return article;
-    }
 }

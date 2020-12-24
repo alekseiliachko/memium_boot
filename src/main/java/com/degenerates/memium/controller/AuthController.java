@@ -21,12 +21,12 @@ public class AuthController {
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PostMapping("/login")
     public ResponseEntity<LogInSuccess> authenticateUser(@RequestBody LogInForm loginRequest) {
@@ -35,12 +35,12 @@ public class AuthController {
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
-            @ApiResponse(code = 204, message = "No Content fo show"),
+            @ApiResponse(code = 204, message = "No Content for showing"),
             @ApiResponse(code = 400, message = "Json corrupted"),
             @ApiResponse(code = 401, message = "Bad Token"),
             @ApiResponse(code = 404, message = "Entity was supposed to be found, but was not"),
             @ApiResponse(code = 403, message = "Not allowed to do so"),
-            @ApiResponse(code = 415, message = "Bad Media File provided"),
+            @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PostMapping("/signup")
     public HttpStatus registerUser(@RequestBody SignupForm signUpRequest) {

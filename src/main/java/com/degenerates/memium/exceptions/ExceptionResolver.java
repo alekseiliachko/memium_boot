@@ -25,7 +25,7 @@ public class ExceptionResolver extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = { OptionalEntityNotFoundException.class })
     protected ResponseEntity<Object> handleConflict(OptionalEntityNotFoundException ex, WebRequest request) {
-        log.error("No Content fo show");
+        log.error("No Content for showing");
         String bodyOfResponse = "this optional entity has yet to be set or created";
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.NO_CONTENT, request);
@@ -50,7 +50,7 @@ public class ExceptionResolver extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = { MultipartException.class })
     protected ResponseEntity<Object> handleConflict(MultipartException ex, WebRequest request) {
-        log.error("Bad Media File provided");
+        log.error("Unsupported Media File provided");
         String bodyOfResponse = "not multipart";
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.UNSUPPORTED_MEDIA_TYPE, request);

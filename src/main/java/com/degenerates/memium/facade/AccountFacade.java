@@ -6,7 +6,6 @@ import com.degenerates.memium.model.dao.AccountDetails;
 import com.degenerates.memium.model.dao.AccountImage;
 import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dto.*;
-import com.degenerates.memium.security.jwt.JwtUtils;
 import com.degenerates.memium.service.*;
 import com.degenerates.memium.util.Utils;
 import lombok.extern.slf4j.Slf4j;
@@ -107,14 +106,14 @@ public class AccountFacade {
         Account account = utils.validateTokenAndGetOwner(token);
         log.info("Found account with Id: " + account.getAccountId());
 
-        return ResponseEntity.ok(account.toAccountDto());
+        return ResponseEntity.ok(account.convertToAccountDto());
     }
 
     public ResponseEntity<AccountDto> getAccountById(UUID accountId) {
         Account account = accountService.getById(accountId);
         log.info("Found account by Id: " + accountId);
 
-        return ResponseEntity.ok(account.toAccountDto());
+        return ResponseEntity.ok(account.convertToAccountDto());
     }
 
     public ResponseEntity<AccountDto> updateAccount(String token, UpdatePasswordEmailDto updatePasswordEmailDto) {
@@ -129,7 +128,7 @@ public class AccountFacade {
         account = accountService.save(account);
         log.info("Account updated: " + account.getAccountId());
 
-        return ResponseEntity.ok(account.toAccountDto());
+        return ResponseEntity.ok(account.convertToAccountDto());
     }
 
     public ResponseEntity<AccountDetailsDto> getAccountDetailsById(UUID accountId) {

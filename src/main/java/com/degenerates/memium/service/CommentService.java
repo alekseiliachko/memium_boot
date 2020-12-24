@@ -24,12 +24,7 @@ public class CommentService {
         return commentRepository.findByArticleId(articleId);
     }
 
-    public Boolean checkIfExists(UUID articleId) {
-        return commentRepository.existsById(articleId);
-    }
-
     public Comment save(Comment comment) {
-        //todo
         return commentRepository.save(comment);
     }
 
