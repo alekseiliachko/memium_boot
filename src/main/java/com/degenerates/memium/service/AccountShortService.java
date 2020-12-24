@@ -24,6 +24,14 @@ public class AccountShortService {
     @Autowired
     AccountImageService accountImageService;
 
+    public AccountShortDto getAccountById(UUID accountId) {
+        Account account = accountService.getById(accountId);
+        AccountDetails accountDetails = accountDetailsService.getByAccountId(accountId);
+        AccountImage accountImage = accountImageService.getByAccountId(accountId);
+
+        return Utils.toAccountShortDto(account, accountDetails, accountImage);
+    }
+
     public List<AccountShortDto> getAccountsByIds(List<UUID> list) {
         List<AccountShortDto> accountShortDtoList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -34,4 +42,5 @@ public class AccountShortService {
         }
         return accountShortDtoList;
     }
+
 }

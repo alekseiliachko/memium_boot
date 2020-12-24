@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface CommentRepository extends MongoRepository<Comment, UUID> {
 
     List<Comment> findByArticleId(UUID articleId);
-
+    Comment findByAuthorId(UUID authorId);
     void deleteByArticleId(UUID articleId);
 }

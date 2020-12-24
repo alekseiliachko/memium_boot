@@ -29,6 +29,10 @@ public class AccountService {
         return accountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     };
 
+    public List<Account> getByIds(List<UUID> ids) {
+        return accountRepository.findByAccountIdIn(ids);
+    }
+
     public Boolean checkIfExists(String username) {
         return accountRepository.existsByUsername(username);
     }
