@@ -2,8 +2,6 @@ package com.degenerates.memium.model.dto;
 
 import com.degenerates.memium.model.dao.AccountDetails;
 import lombok.Data;
-import lombok.NonNull;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 import java.util.UUID;

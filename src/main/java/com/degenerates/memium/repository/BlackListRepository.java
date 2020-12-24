@@ -1,7 +1,6 @@
 package com.degenerates.memium.repository;
 
 import com.degenerates.memium.model.relations.BlackList;
-import com.degenerates.memium.model.relations.LikeList;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

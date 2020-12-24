@@ -3,8 +3,6 @@ package com.degenerates.memium.service;
 import com.degenerates.memium.model.relations.SubList;
 import com.degenerates.memium.repository.SubListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

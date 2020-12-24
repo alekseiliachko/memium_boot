@@ -1,6 +1,5 @@
 package com.degenerates.memium.service;
 
-import com.degenerates.memium.exceptions.EntityNotFoundException;
 import com.degenerates.memium.exceptions.OptionalEntityNotFoundException;
 import com.degenerates.memium.model.dao.ArticleImage;
 import com.degenerates.memium.repository.ArticleImageRepository;

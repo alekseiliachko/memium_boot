@@ -1,6 +1,5 @@
 package com.degenerates.memium.model.dto;
 
-import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.enums.Category;
 import lombok.Data;
 

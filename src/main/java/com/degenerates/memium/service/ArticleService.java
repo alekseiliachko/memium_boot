@@ -3,7 +3,6 @@ package com.degenerates.memium.service;
 import com.degenerates.memium.exceptions.EntityNotFoundException;
 import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.repository.ArticleRepository;
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

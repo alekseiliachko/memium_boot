@@ -1,7 +1,6 @@
 package com.degenerates.memium.model.dao;
 
 import com.degenerates.memium.model.dto.AccountDto;
-import com.degenerates.memium.model.dto.AccountShortDto;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;

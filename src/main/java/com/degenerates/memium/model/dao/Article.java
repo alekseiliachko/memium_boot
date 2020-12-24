@@ -1,9 +1,12 @@
 package com.degenerates.memium.model.dao;
 
+import com.degenerates.memium.model.dto.ArticleDto;
 import com.degenerates.memium.model.dto.ArticleShortDto;
 import com.degenerates.memium.model.enums.Category;
-import com.degenerates.memium.model.dto.ArticleDto;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;

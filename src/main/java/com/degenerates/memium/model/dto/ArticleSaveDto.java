@@ -4,9 +4,6 @@ import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.enums.Category;
 import lombok.Data;
 
-import java.util.Date;
-import java.util.UUID;
-
 @Data
 public class ArticleSaveDto {
 

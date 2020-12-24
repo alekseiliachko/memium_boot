@@ -3,7 +3,6 @@ package com.degenerates.memium.model.dto;
 import com.degenerates.memium.model.dao.Comment;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Data
