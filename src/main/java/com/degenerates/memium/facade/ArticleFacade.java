@@ -124,6 +124,7 @@ public class ArticleFacade {
         Article article = articleService.getById(articleDto.getId());
 
         article.setTitle(articleDto.getTitle());
+        article.setData(articleDto.getData());
         article.setCategory(articleDto.getCategory());
         article.setDate(new Date());
 
