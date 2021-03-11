@@ -1,3 +1,5 @@
+package Component;
+
 import com.degenerates.memium.facade.ArticleFacade;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.Article;

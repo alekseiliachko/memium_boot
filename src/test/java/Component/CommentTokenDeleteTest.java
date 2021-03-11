@@ -1,3 +1,5 @@
+package Component;
+
 import com.degenerates.memium.exceptions.AccessMismatchException;
 import com.degenerates.memium.facade.CommentFacade;
 import com.degenerates.memium.model.dao.Account;
