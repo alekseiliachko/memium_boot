@@ -8,6 +8,7 @@ import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dto.*;
 import com.degenerates.memium.service.*;
 import com.degenerates.memium.util.Utils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,37 +24,28 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AccountFacade {
 
-    @Autowired
-    AccountService accountService;
+    private final AccountService accountService;
 
-    @Autowired
-    ArticleService articleService;
+    private final ArticleService articleService;
 
-    @Autowired
-    AccountDetailsService accountDetailsService;
+    private final AccountDetailsService accountDetailsService;
 
-    @Autowired
-    BlackListService blackListService;
+    private final BlackListService blackListService;
 
-    @Autowired
-    SubService subService;
+    private final SubService subService;
 
-    @Autowired
-    LikeService likeService;
+    private final LikeService likeService;
 
-    @Autowired
-    PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
-    @Autowired
-    Utils utils;
+    private final Utils utils;
 
-    @Autowired
-    AccountImageService accountImageService;
+    private final AccountImageService accountImageService;
 
-    @Autowired
-    AccountShortService accountShortService;
+    private final AccountShortService accountShortService;
 
     public byte[] getAvatar(String token) {
         Account account = utils.validateTokenAndGetOwner(token);

@@ -1,6 +1,5 @@
-package Component;
+package com.degenerates.memium.facade;
 
-import com.degenerates.memium.facade.ArticleFacade;
 import com.degenerates.memium.model.dao.Account;
 import com.degenerates.memium.model.dao.Article;
 import com.degenerates.memium.model.dao.Comment;
@@ -26,7 +25,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@ExtendWith(MockitoExtension.class) public class ArticleCommentAccountTest {
+@ExtendWith(MockitoExtension.class)
+public class ArticleFacadeTest {
 
     @Mock
     ArticleService articleService;

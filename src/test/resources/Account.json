@@ -1,0 +1,13 @@
+{
+  "accountId" : "f6ca3492-7012-4aac-8016-709ddf74d494",
+  "roles" : [
+    {
+      "id": "0d9c2091-633a-4fd8-b075-5132502de21e",
+      "name": "ROLE_USER"
+    }
+  ],
+  "username": "alex",
+  "email": "email@email.com",
+  "password": "hash",
+  "created": "2019-12-11T11:40:49Z"
+}

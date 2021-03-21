@@ -14,18 +14,18 @@ import java.util.UUID;
 @Slf4j
 public class AccountDetailsService {
 
-
     @Autowired
     AccountDetailsRepository accountDetailsRepository;
 
     public AccountDetails save(AccountDetails accountDetails) {
-        AccountDetails accountDetailsSaved = accountDetailsRepository.save(accountDetails);
-        System.out.println(accountDetailsSaved);
-        return accountDetails;
+        return accountDetailsRepository.save(accountDetails);
     }
 
     public AccountDetails getByAccountId(UUID id) {
-        AccountDetails accountDetails = accountDetailsRepository.findByAccountIdIn(id).orElseThrow(EntityNotFoundException::new);
+        AccountDetails accountDetails =
+                accountDetailsRepository
+                        .findByAccountIdIn(id)
+                        .orElseThrow(EntityNotFoundException::new);
         return accountDetails;
     };
 

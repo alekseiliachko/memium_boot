@@ -6,6 +6,7 @@ import com.degenerates.memium.util.Utils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,12 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/account/")
+@RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
-    AccountFacade accountFacade;
+    private final AccountFacade accountFacade;
 
-    @Autowired
-    Utils utils;
+    private final Utils utils;
 
     @ApiOperation(value = "Get Avatar based on current token in Headers ", response = byte[].class, produces = "application/octet-stream")
     @ApiResponses(value = {
