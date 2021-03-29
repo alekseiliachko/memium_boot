@@ -33,7 +33,7 @@ public class CommentService {
     }
 
     public void deleteByAtricleId(UUID articleId) {
-        deleteByAtricleId(articleId);
+        commentRepository.deleteByArticleId(articleId);
     }
 
     public void deleteById(UUID commentId) {

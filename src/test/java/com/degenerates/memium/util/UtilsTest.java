@@ -1,3 +1,5 @@
+package com.degenerates.memium.util;
+
 import com.degenerates.memium.exceptions.AccessMismatchException;
 import com.degenerates.memium.exceptions.BadTokenException;
 import com.degenerates.memium.model.dao.Account;

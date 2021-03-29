@@ -1,4 +1,4 @@
-package Component;
+package com.degenerates.memium.facade;
 
 import com.degenerates.memium.facade.ArticleFacade;
 import com.degenerates.memium.model.dao.Account;

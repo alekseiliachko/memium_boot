@@ -138,7 +138,7 @@ public class AccountController {
             @ApiResponse(code = 415, message = "Unsupported Media File provided"),
     })
     @PutMapping("/email")
-    public ResponseEntity<AccountDto> updateAccount(@RequestHeader HttpHeaders headers, UpdatePasswordEmailDto updatePasswordEmailDto) {
+    public ResponseEntity<AccountDto> updateAccount(@RequestHeader HttpHeaders headers, @RequestBody UpdatePasswordEmailDto updatePasswordEmailDto) {
         return accountFacade.updateAccount(utils.extractToken(headers), updatePasswordEmailDto);
     }
 

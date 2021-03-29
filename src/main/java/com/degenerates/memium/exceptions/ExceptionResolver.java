@@ -56,6 +56,22 @@ public class ExceptionResolver extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.UNSUPPORTED_MEDIA_TYPE, request);
     }
 
+    @ExceptionHandler(value = { NullPointerException.class })
+    protected ResponseEntity<Object> handleConflict(NullPointerException ex, WebRequest request) {
+        log.error("Unsupported Media File provided");
+        String bodyOfResponse = "Bad input";
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = { IllegalArgumentException.class })
+    protected ResponseEntity<Object> handleConflict(IllegalArgumentException ex, WebRequest request) {
+        log.error("Some data problem");
+        String bodyOfResponse = "Bad input";
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.error("Json corrupted");

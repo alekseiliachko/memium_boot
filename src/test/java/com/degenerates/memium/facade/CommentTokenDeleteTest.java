@@ -1,4 +1,4 @@
-package Component;
+package com.degenerates.memium.facade;
 
 import com.degenerates.memium.exceptions.AccessMismatchException;
 import com.degenerates.memium.facade.CommentFacade;
