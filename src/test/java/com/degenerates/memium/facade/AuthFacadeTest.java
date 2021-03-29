@@ -77,9 +77,6 @@ public class AuthFacadeTest {
         when(authenticationManager.authenticate(any())).thenReturn(authentication);
         when(jwtUtils.generateJwtToken(authentication)).thenReturn("TOKEN");
         when(authentication.getPrincipal()).thenReturn(securityUserDetails);
-//        when(securityUserDetails.getAuthorities().stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.toList())).thenReturn(roles);
         when(securityUserDetails.getUsername()).thenReturn("username");
 
         assertEquals(new LogInSuccess("TOKEN", "username"),authFacade.logUserIn(logInRequest).getBody());
